@@ -129,7 +129,7 @@
                                 <g id="Group-11" transform="translate(221.000000, 369.000000)">
                                     <g id="Group-3">
                                         <text id="Work-Shop" font-family="Lato-Bold, Lato" font-size="48" font-weight="bold" line-spacing="48" letter-spacing="1.2" fill="#FFFFFF">
-                                            <tspan x="0" y="227">NCHU帮扶</tspan>
+                                            <tspan x="0" y="227">Work-Shop</tspan>
                                         </text>
                                         <g id="Group-15" transform="translate(66.000000, 0.000000)">
                                             <path d="M9.1363609,105.499789 L63.9545263,137.150195 L118.774256,105.499789 L118.774256,47.475609 L63.9545263,79.1244511 L9.1363609,47.475609 L9.1363609,105.499789 Z M63.9545263,147.698767 L0,110.774857 L0,31.650406 L63.9545263,68.5758797 L127.910617,31.650406 L127.910617,110.774857 L63.9545263,147.698767 L63.9545263,147.698767 Z" id="Fill-28" fill="#FFFFFF"></path>
@@ -174,62 +174,31 @@
                     </svg>
                 </div>
             </div>
-            <div class="w-full lg:w-1/2 flex justify-center bg-white transition-all">
+            <div class="w-full lg:w-1/2 flex justify-center bg-white">
                 <div class="w-full sm:w-4/6 md:w-3/6 lg:w-2/3 text-gray-800 flex flex-col justify-center px-5 sm:px-10 py-16">
                     <div class="px-2 sm:px-6">
-                        <h3 class="text-2xl sm:text-3xl md:text-2xl font-bold leading-tight">选择您的身份</h3>
+                        <h3 class="text-2xl sm:text-3xl md:text-2xl font-bold leading-tight">Login To Your Account</h3>
                     </div>
                     <div class="mt-8 w-full px-2 sm:px-6">
-
-                        <Listbox as="div" v-model="selected">
-                            <ListboxLabel class="sr-only">
-                                Change published status
-                            </ListboxLabel>
-                            <div class="relative">
-                                <div class="inline-flex shadow-sm rounded-md divide-x divide-blue-600">
-                                    <div class="relative z-0 inline-flex shadow-sm rounded-md divide-x divide-blue-600">
-                                        <div class="relative inline-flex items-center bg-blue-500 py-2 pl-3 pr-4 border border-transparent rounded-l-md shadow-sm text-white">
-                                            <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                                            <p class="ml-2.5 text-sm font-medium">{{ selected.title }}</p>
-                                        </div>
-                                        <ListboxButton class="relative inline-flex items-center bg-blue-500 p-2 rounded-l-none rounded-r-md text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500">
-                                            <span class="sr-only">Change published status</span>
-                                            <ChevronDownIcon class="h-5 w-5 text-white" aria-hidden="true" />
-                                        </ListboxButton>
-                                    </div>
-                                </div>
-
-                                <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                                    <ListboxOptions class="origin-top-right absolute z-10 right-0 mt-2 w-72 rounded-md shadow-lg overflow-hidden bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                        <ListboxOption as="template" v-for="option in publishingOptions" :key="option.title" :value="option" v-slot="{ active, selected }">
-                                            <li @click="select()" :class="[active ? 'text-white bg-blue-500' : 'text-gray-900', 'cursor-default select-none relative p-4 text-sm']">
-                                                <div class="flex flex-col">
-                                                    <div class="flex justify-between">
-                                                        <p :class="selected ? 'font-semibold' : 'font-normal'">
-                                                            {{ option.title }}
-                                                        </p>
-                                                        <span v-if="selected" :class="active ? 'text-white' : 'text-blue-500'">
-                    <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                  </span>
-                                                    </div>
-                                                    <p :class="[active ? 'text-blue-200' : 'text-gray-500', 'mt-2']">
-                                                        {{ option.description }}
-                                                    </p>
-                                                </div>
-                                            </li>
-                                        </ListboxOption>
-                                    </ListboxOptions>
-                                </transition>
-                            </div>
-                        </Listbox>
-
-                        <div v-if="showInput" class="flex flex-col mt-8">
-                            <label for="uid" class="text-lg font-semibold leading-tight">{{inputTitle}}</label>
-                            <input v-model="uid" id="uid" class="h-10 px-2 w-full rounded mt-2 text-gray-600 focus:outline-none focus:border focus:border-blue-700 border-gray-300 border shadow" type="text" />
+                        <div class="flex flex-col mt-8">
+                            <label for="email" class="text-lg font-semibold leading-tight">Email</label>
+                            <input id="email" class="h-10 px-2 w-full rounded mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 border-gray-300 border shadow" type="text" />
+                        </div>
+                        <div class="flex flex-col mt-5">
+                            <label for="password" class="text-lg font-semibold fleading-tight">Password</label>
+                            <input id="password" class="h-10 px-2 w-full rounded mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 border-gray-300 border shadow" type="text" />
                         </div>
                     </div>
-                    <div v-if="showInput" class="px-2 sm:px-6">
-                        <button @click="signIn()" class="focus:outline-none w-full sm:w-auto bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-700 rounded text-white px-8 py-3 text-sm mt-6">登陆</button>
+                    <div class="pt-6 w-full flex justify-between px-2 sm:px-6">
+                        <div class="flex items-center">
+                            <input id="rememberme" class="w-3 h-3 mr-2" type="checkbox" />
+                            <label for="rememberme" class="text-xs">Remember Me</label>
+                        </div>
+                        <a class="text-xs text-blue-600" href="javascript: void(0)">Forgot Password?</a>
+                    </div>
+                    <div class="px-2 sm:px-6">
+                        <button class="focus:outline-none w-full sm:w-auto bg-blue-700 transition duration-150 ease-in-out hover:bg-blue-700 rounded text-white px-8 py-3 text-sm mt-6">Login</button>
+                        <p class="mt-6 text-xs">Don’t Have An Account? <a class="underline text-blue-600" href="javascript: void(0)">Sign Up</a></p>
                     </div>
                 </div>
             </div>
@@ -237,74 +206,3 @@
     </section>
 </div>
 </template>
-
-<script>
-    import { ref } from 'vue'
-    import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
-    import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/solid'
-
-    const publishingOptions = [
-        { title: '请选择', description: '选择您的身份', current: true },
-        { title: '学生', description: '用学号登陆', current: false },
-        { title: '老师', description: '用工号登陆', current: false },
-    ]
-
-    export default {
-        components: {
-            Listbox,
-            ListboxButton,
-            ListboxLabel,
-            ListboxOption,
-            ListboxOptions,
-            CheckIcon,
-            ChevronDownIcon,
-        },
-        data: function () {
-            return {
-                uid: '',
-                inputTitle: '',
-                showInput: false,
-            }
-        },
-        setup() {
-            const selected = ref(publishingOptions[0])
-
-            return {
-                publishingOptions,
-                selected,
-            }
-        },
-        methods: {
-            select() {
-                setTimeout(() => {
-                    // console.log(this.selected.title)
-                    if (this.selected.title === '学生') {
-                        this.inputTitle = '请输入学号：'
-                        this.showInput = true
-                    }
-                    else if (this.selected.title === '老师') {
-                        this.inputTitle = '请输入工号：'
-                        this.showInput = true
-                    } else {
-                        this.inputTitle = ''
-                        this.showInput = false
-                    }
-                }, 100)
-            },
-            signIn() {
-                let data = {
-                    type: this.selected.title,
-                    uid: this.uid
-                }
-                if (this.selected.title === '学生') {
-                    window.location.href = '/'
-                }
-                else if (this.selected.title === '老师') {
-                    window.location.href = '/teacher/home-page'
-                } else {
-                    console.error("SELECT TYPE ERROR")
-                }
-            }
-        }
-    }
-</script>

@@ -1,6 +1,4 @@
 <template>
-  <div class="md:container md:mx-auto">
-    <router-view />
-  </div>
+  <router-view />
 </template>
- 
+
