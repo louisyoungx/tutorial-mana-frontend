@@ -109,38 +109,9 @@
                         </g>
                     </svg>
                 </div>
-                <div class="flex relative z-30 flex-col justify-center px-4 md:pr-12">
-                    <svg width="255px" height="232px" viewBox="0 0 255 232" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
-                        <title>Group 11</title>
-                        <desc>Created with Sketch.</desc>
-                        <defs>
-                            <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
-                                <stop stop-color="#2A4365" offset="0%"></stop>
-                                <stop stop-color="#2C5282" offset="100%"></stop>
-                            </linearGradient>
-                            <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
-                                <stop stop-color="#2A4365" offset="0%"></stop>
-                                <stop stop-color="#2C5282" offset="100%"></stop>
-                            </linearGradient>
-                        </defs>
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g id="1_job_portal_sign_in" transform="translate(-221.000000, -369.000000)">
-                                <g id="Group-11" transform="translate(221.000000, 369.000000)">
-                                    <g id="Group-3">
-                                        <text id="Work-Shop" font-family="Lato-Bold, Lato" font-size="48" font-weight="bold" line-spacing="48" letter-spacing="1.2" fill="#FFFFFF">
-                                            <tspan x="0" y="227">NCHU帮扶</tspan>
-                                        </text>
-                                        <g id="Group-15" transform="translate(66.000000, 0.000000)">
-                                            <path d="M9.1363609,105.499789 L63.9545263,137.150195 L118.774256,105.499789 L118.774256,47.475609 L63.9545263,79.1244511 L9.1363609,47.475609 L9.1363609,105.499789 Z M63.9545263,147.698767 L0,110.774857 L0,31.650406 L63.9545263,68.5758797 L127.910617,31.650406 L127.910617,110.774857 L63.9545263,147.698767 L63.9545263,147.698767 Z" id="Fill-28" fill="#FFFFFF"></path>
-                                            <polyline id="Fill-29" fill="url(#linearGradient-1)" points="32.1039398 28.9401504 63.9545263 10.5501353 95.8082406 28.9401504 114.079398 28.9401504 63.9545263 0 13.832782 28.9401504 32.1039398 28.9401504"></polyline>
-                                            <polyline id="Fill-30" fill="url(#linearGradient-2)" points="54.3489925 40.4270677 63.9545263 34.8814436 73.563188 40.4270677 91.6466767 40.4270677 91.6951579 40.3473083 63.9545263 24.3313083 36.0762707 40.4270677 54.3489925 40.4270677"></polyline>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
+                <div class="flex-center flex relative z-30 flex-col justify-center justify-items-center px-4 md:pr-12">
+                    <img class="w-2/5 shadow-xl" src="../assets/logo.gif"/>
+                    <h1 class="pt-5 text-5xl sm:text-6xl md:text-5xl text-gray-50 text-opacity-90 font-bold text-center leading-tight">学生帮扶系统</h1>
                 </div>
                 <div class="absolute right-0 bottom-0">
                     <svg width="236px" height="234px" viewBox="0 0 236 234" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -242,6 +213,7 @@
     import { ref } from 'vue'
     import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
     import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/solid'
+    import api from '../http/index'
 
     const publishingOptions = [
         { title: '请选择', description: '选择您的身份', current: true },
@@ -268,12 +240,15 @@
         },
         setup() {
             const selected = ref(publishingOptions[0])
-
             return {
                 publishingOptions,
                 selected,
             }
         },
+        created() {
+            this.signInHandler('123456', 'teacher')
+        },
+
         methods: {
             select() {
                 setTimeout(() => {
@@ -291,20 +266,78 @@
                     }
                 }, 100)
             },
+
             signIn() {
                 let data = {
                     type: this.selected.title,
                     uid: this.uid
                 }
                 if (this.selected.title === '学生') {
-                    window.location.href = '/'
+                    this.signInHandler(this.uid, 'student')
                 }
                 else if (this.selected.title === '老师') {
-                    window.location.href = '/teacher/home-page'
+                    this.signInHandler(this.uid, 'teacher')
                 } else {
                     console.error("SELECT TYPE ERROR")
                 }
+            },
+
+            signInHandler(uid, type) {
+                return api.signIn(uid, type).then(res => {
+                    if (res.length !== 0) {
+                        console.log('Login success')
+                        this.$store.commit('type', type)
+                        this.$store.commit('init', res[0])
+                        this.updateHandler(type)
+                        this.$router.push(`/${type}/home-page`)
+                    } else {
+                        console.log('Login Failed')
+                        this.updateHandler(type)
+                    }
+                })
+            },
+
+            updateHandler(type) {
+                let id = this.$store.state.id
+                if (type === 'student') {
+                    this.updateStudent(id)
+                }
+                else if (type === 'teacher') {
+                    this.updateTeacher(id)
+                }
+            },
+
+            updateStudent(id) {
+                api.update(id, 'student').then(info => {
+                    console.log(info)
+                    this.$store.commit('joinedCourse', info[0])
+                    this.$store.commit('joinedTutorial', info[1])
+                    // console.log(this.$store.state)
+                })
+            },
+
+            updateTeacher(id) {
+                api.update(id, 'teacher').then(info => {
+                    console.log(info)
+                    this.$store.commit('course', info[0])
+                    this.$store.commit('tutorial', info[1])
+                    this.$store.dispatch('courseList')
+                    this.$store.dispatch('tutorialActivity')
+                    this.$store.dispatch('tutorialData')
+                    // console.log(this.$store.state)
+                })
+            },
+            showState() {
+                console.log(this.$store.state)
             }
         }
     }
 </script>
+
+<style scoped>
+    .flex-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

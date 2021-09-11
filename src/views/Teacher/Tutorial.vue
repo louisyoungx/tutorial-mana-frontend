@@ -6,7 +6,7 @@
         <div
           class="w-full bg-white py-3 md:py-6 px-4 md:px-8 flex flex-col md:flex-row md:items-center md:justify-between md:shadow rounded"
         >
-          <h2 class="text-gray-800 text-xl">Tickets</h2>
+          <h2 class="text-gray-800 text-xl">帮扶活动</h2>
         </div>
       </div>
 
@@ -18,36 +18,36 @@
         >
           <div class="absolute w-2 h-4 divcolor left-0"></div>
           <h3 class="py-6 leading-4 text-gray-800 font-normal text-base">
-            Total Tickets
+            帮扶活动
           </h3>
-          <h2 class="text-gray-800 text-2xl leading-normal">200</h2>
+          <h2 class="text-gray-800 text-2xl leading-normal">{{tutorialData.activity}}</h2>
         </div>
         <div
           class="bg-white rounded flex items-center justify-between px-5 relative shadow"
         >
           <div class="absolute w-2 h-4 divcolor left-0"></div>
           <h3 class="py-6 leading-4 text-gray-800 font-normal text-base">
-            New Tickets
+            单独帮扶
           </h3>
-          <h2 class="text-gray-800 text-2xl leading-normal">23</h2>
+          <h2 class="text-gray-800 text-2xl leading-normal">{{tutorialData.single}}</h2>
         </div>
         <div
           class="bg-white rounded flex items-center justify-between px-5 relative shadow"
         >
           <div class="absolute w-2 h-4 divcolor left-0"></div>
           <h3 class="py-6 leading-4 text-gray-800 font-normal text-base">
-            Urgent
+            帮扶人数
           </h3>
-          <h2 class="text-gray-800 text-2xl leading-normal">02</h2>
+          <h2 class="text-gray-800 text-2xl leading-normal">{{tutorialData.total}}</h2>
         </div>
         <div
           class="bg-white rounded flex items-center justify-between px-5 relative shadow"
         >
           <div class="absolute w-2 h-4 divcolor left-0"></div>
           <h3 class="py-6 leading-4 text-gray-800 font-normal text-base">
-            Pending
+            课程数目
           </h3>
-          <h2 class="text-gray-800 text-2xl leading-normal">08</h2>
+          <h2 class="text-gray-800 text-2xl leading-normal">{{tutorialData.course}}</h2>
         </div>
       </div>
 
@@ -307,22 +307,22 @@
                 <th
                   class="text-gray-600 font-normal pr-6 text-left text-sm tracking-normal leading-4"
                 >
-                  Assigned Agent
+                  课程
                 </th>
                 <th
                   class="text-gray-600 font-normal pr-6 text-left text-sm tracking-normal leading-4"
                 >
-                  Last Comment
+                  描述
                 </th>
                 <th
                   class="text-gray-600 font-normal pr-6 text-left text-sm tracking-normal leading-4"
                 >
-                  Date
+                  日期
                 </th>
                 <th
                   class="text-gray-600 font-normal pr-6 text-left text-sm tracking-normal leading-4"
                 >
-                  Status
+                  状态
                 </th>
                 <th
                   class="text-gray-600 font-normal pr-6 text-left text-sm tracking-normal leading-4"
@@ -334,17 +334,15 @@
                 <td
                   class="text-gray-600 font-normal pr-8 text-left text-sm tracking-normal leading-4"
                 >
-                  More
+                  更多
                 </td>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="user in users" class="h-24 border-gray-300 border-b" :key="user.id">
-                <td
-                  class="pl-8 pr-6 text-left whitespace-no-wrap text-sm text-gray-800 tracking-normal leading-4"
-                >
+              <tr v-for="activity in tutorialActivity" class="h-24 border-gray-300 border-b" :key="activity.id">
+                <td class="pl-8 pr-6 text-left whitespace-no-wrap text-sm text-gray-800 tracking-normal leading-4">
                   <input
-                    v-model="selected" :value="user.id" number
+                    v-model="selected" :value="activity.id" number
                     type="checkbox"
                     class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white outline-none"
                   />
@@ -353,61 +351,49 @@
                   <div class="flex items-center">
                     <div class="h-8 w-8">
                       <img
-                        src="https://tuk-cdn.s3.amazonaws.com/assets/components/advance_tables/at_1.png"
+                        :src=avatar
                         alt=""
                         class="h-full w-full rounded-full overflow-hidden shadow"
                       />
                     </div>
-                    <p
-                      class="ml-2 text-gray-800 tracking-normal leading-4 text-sm"
-                    >
-                      {{ user.name }}
+                    <p class="ml-2 text-gray-800 tracking-normal leading-4 text-sm">
+                      {{ activity.title }}
                     </p>
                   </div>
                 </td>
-                <td
-                  class="text-sm pr-6 whitespace-no-wrap text-gray-800 tracking-normal leading-4"
-                >
-                  You can access the webapp through here
+                <td class="text-sm pr-6 whitespace-no-wrap text-gray-800 tracking-normal leading-4">
+                  {{ activity.describe }}
                 </td>
-                <td
-                  class="text-sm pr-6 whitespace-no-wrap text-gray-800 tracking-normal leading-4"
-                >
-                  02.03.20
+                <td class="text-sm pr-6 whitespace-no-wrap text-gray-800 tracking-normal leading-4">
+                  {{ activity.day }}
                 </td>
-                <td
-                  class="text-sm pr-6 whitespace-no-wrap text-green-400 tracking-normal leading-4"
-                >
-                  Active
+                <td v-if="activity.active" class="text-sm pr-6 whitespace-no-wrap text-green-400 tracking-normal leading-4">
+                  进行中
                 </td>
-                <td class="pr-6">
+                <td v-else class="text-sm pr-6 whitespace-no-wrap text-red-400 tracking-normal leading-4">
+                  已结束
+                </td>
+                <td v-if="activity.active" class="pr-6">
                   <div class="w-2 h-2 rounded-full bg-green-400"></div>
                 </td>
+                <td v-else class="pr-6">
+                  <div class="w-2 h-2 rounded-full bg-red-400"></div>
+                </td>
                 <td class="pr-8 relative">
-                  <div
-                    class="dropdown-content mt-8 absolute left-0 -ml-12 shadow-md z-10 hidden w-32"
-                  >
+                  <div class="dropdown-content mt-8 absolute left-0 -ml-12 shadow-md z-10 hidden w-32">
                     <ul class="bg-white shadow rounded py-1">
-                      <li
-                        class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-3 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-                      >
+                      <li class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-3 hover:bg-indigo-700 hover:text-white px-3 font-normal">
                         Edit
                       </li>
-                      <li
-                        class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-3 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-                      >
+                      <li class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-3 hover:bg-indigo-700 hover:text-white px-3 font-normal">
                         Delete
                       </li>
-                      <li
-                        class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-3 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-                      >
+                      <li class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-3 hover:bg-indigo-700 hover:text-white px-3 font-normal">
                         Duplicate
                       </li>
                     </ul>
                   </div>
-                  <button
-                    class="text-gray-500 rounded cursor-pointer border border-transparent focus:outline-none"
-                  >
+                  <button class="text-gray-500 rounded cursor-pointer border border-transparent focus:outline-none">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       onclick="dropdownFunction(this)"
@@ -446,6 +432,14 @@ export default {
     return {
       menu: true,
       check: false,
+      tutorialActivity: [],
+      tutorialData:
+      {
+          activity: 0,
+          single: 0,
+          total: 0,
+          course: 0
+      },
       users: [
         {
           id: "1",
@@ -489,11 +483,20 @@ export default {
       },
     },
   },
+  created() {
+    this.avatar = this.$store.state.avatar;
+    this.tutorialData = this.deepClone(this.$store.state.tutorial.tutorialData)
+    this.tutorialActivity = this.deepClone(this.$store.state.tutorial.tutorialActivity)
+    console.log(this.tutorialActivity)
+  },
   methods: {
     sidebarHandler() {
       this.menu = !this.menu;
       let single = document.getElementById("menuList");
       single.classList.toggle("hidden");
+    },
+    deepClone(obj) {
+      return JSON.parse(JSON.stringify(obj))
     },
   },
 };
