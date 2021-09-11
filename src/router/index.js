@@ -7,6 +7,8 @@ const  TeacherQuest = () => import('../views/Teacher/Quest')
 const  TeacherSettings = () => import('../views/Teacher/Settings')
 const  TeacherStudent = () => import('../views/Teacher/Student')
 const  TeacherTutorial = () => import('../views/Teacher/Tutorial')
+const  CreateCourse = () => import('../views/Teacher/Create/CreateCourse')
+const  CreateTutorial = () => import('../views/Teacher/Create/CreateTutorial')
 
 const routes = [
   {
@@ -38,6 +40,16 @@ const routes = [
     path: '/teacher/tutorial',
     name: 'TeacherTutorial',
     component: TeacherTutorial
+  },
+  {
+    path: '/teacher/create/course',
+    name: 'CreateCourse',
+    component: CreateCourse
+  },
+  {
+    path: '/teacher/create/tutorial',
+    name: 'CreateTutorial',
+    component: CreateTutorial
   },
 
 ]

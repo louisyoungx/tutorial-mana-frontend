@@ -789,9 +789,9 @@
 </template>
 
 <script>
-import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+import TeacherSidebar from "../../../components/sidebar/teacher-sidebar";
 export default {
-  name: "HelloWorld",
+  name: "CreateTutorial",
   components: {TeacherSidebar},
   data: function () {
     return {

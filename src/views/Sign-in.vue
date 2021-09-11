@@ -111,7 +111,7 @@
                 </div>
                 <div class="flex-center flex relative z-30 flex-col justify-center justify-items-center px-4 md:pr-12">
                     <img class="w-2/5 shadow-xl" src="../assets/logo.gif"/>
-                    <h1 class="pt-5 text-5xl sm:text-6xl md:text-5xl text-gray-50 text-opacity-90 font-bold text-center leading-tight">学生帮扶系统</h1>
+                    <h1 class="pt-5 text-5xl sm:text-6xl md:text-5xl text-gray-50 text-opacity-90 font-bold text-center leading-tight">课业帮扶系统</h1>
                 </div>
                 <div class="absolute right-0 bottom-0">
                     <svg width="236px" height="234px" viewBox="0 0 236 234" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

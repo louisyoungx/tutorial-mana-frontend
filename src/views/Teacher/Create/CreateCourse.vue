@@ -131,7 +131,7 @@
           <div class="container mx-auto">
             <div class="xl:w-full border-b border-gray-300 py-5">
               <div class="flex items-center w-11/12 mx-auto">
-                <p class="text-lg text-gray-800 font-bold">详情</p>
+                <p class="text-lg text-gray-800 font-bold">详情（名称/描述）</p>
                 <div
                   class="relative md:mt-0"
                   onmouseover="showTooltip(true)"
@@ -204,86 +204,55 @@
               </div>
             </div>
             <div class="w-11/12 mx-auto">
-              <div
-                class="w-20 h-20 rounded-full bg-cover bg-center bg-no-repeat relative mt-6 shadow mb-8"
-              >
-                <img
-                  src="https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form2.jpg"
-                  alt=""
-                  class="w-full h-full object-cover overflow-hidden absolute z-0 rounded-full shadow"
-                />
-                <div
-                  class="bg-white h-6 w-6 rounded-full flex items-center justify-center right-0 absolute cursor-pointer text-gray-600"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-edit"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <path
-                      d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                    />
-                    <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
-                    <line x1="16" y1="5" x2="19" y2="8" />
-                  </svg>
-                </div>
-              </div>
+              <!--课程名称-->
               <div class="flex flex-col xl:w-2/6 lg:w-2/6 w-full">
+                <br>
                 <label
                   for="username"
                   class="pb-2 text-sm font-bold text-gray-800"
-                  >课程名称/描述/年份/学期/人数限制</label
+                  >课程名称</label
                 >
-                <input
+                <input v-model="course.name"
                   type="text"
                   id="username"
                   name="username"
                   class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                  placeholder="@example"
+                  placeholder="请填写课程名称"
                   required
                 />
               </div>
+              <!--描述-->
               <div class="mt-8 flex flex-col xl:w-3/5 lg:w-3/5 w-full">
                 <label for="about" class="pb-2 text-sm font-bold text-gray-800"
-                  >About</label
+                  >描述</label
                 >
-                <textarea
+                <textarea v-model="course.describe"
                   id="about"
                   name="about"
                   class="border border-gray-300 pl-3 py-2 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 resize-none text-gray-800"
-                  placeholder="Let the world know who you are"
+                  placeholder="请填写该课程的详细描述"
                   rows="5"
                   required
                 ></textarea>
                 <p class="w-full text-right text-xs text-gray-500 pt-1">
-                  Character Limit: 200
+                  字数限制: 50
                 </p>
               </div>
             </div>
           </div>
-          <div
-            class="w-full py-4 sm:px-12 px-4 bg-gray-100 mt-6 flex justify-end rounded-bl rounded-br"
-          >
+          <div class="w-full py-4 sm:px-12 px-4 bg-gray-100 mt-6 flex justify-end rounded-bl rounded-br">
             <button
               type="button"
               class="btn text-sm focus:outline-none text-gray-600 border border-gray-300 py-2 px-6 mr-4 rounded hover:bg-gray-200 transition duration-150 ease-in-out"
             >
-              Back
+              上一步
             </button>
             <button
               type="button"
               v-on:click="handleSteps('1')"
               class="bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 rounded text-white px-8 py-2 text-sm focus:outline-none"
             >
-              Next
+              下一步
             </button>
           </div>
         </form>
@@ -293,7 +262,7 @@
           <div class="xl:w-full border-b border-gray-300 py-5">
             <div class="flex items-center w-11/12 mx-auto">
               <p class="text-lg text-gray-800 font-bold">
-                Personal Information
+                课程信息
               </p>
               <div class="ml-2 cursor-pointer text-gray-600">
                 <svg
@@ -315,134 +284,34 @@
             <div class="container mx-auto">
               <div class="my-8 mx-auto xl:w-full xl:mx-0">
                 <div class="xl:flex lg:flex md:flex flex-wrap justify-between">
+                  <!--学年-->
                   <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
                     <label
-                      for="FirstName"
+                      for="Year"
                       class="pb-2 text-sm font-bold text-gray-800"
-                      >First Name</label
-                    >
-                    <input
-                      type="text"
-                      name="firstName"
-                      required
-                      id="FirstName"
-                      class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder=""
-                    />
-                  </div>
-                  <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                    <label
-                      for="LastName"
-                      class="pb-2 text-sm font-bold text-gray-800"
-                      >Last Name</label
-                    >
-                    <input
-                      type="text"
-                      id="LastName"
-                      name="lastName"
-                      required
-                      class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder=""
-                    />
-                  </div>
-                  <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                    <label
-                      for="email2"
-                      class="pb-2 text-sm font-bold text-gray-800"
-                      >Email</label
-                    >
-                    <div class="relative">
-                      <div
-                        class="absolute text-gray-600 flex items-center px-4 border-r h-full"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="icon icon-tabler icon-tabler-mail"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <rect x="3" y="5" width="18" height="14" rx="2" />
-                          <polyline points="3 7 12 13 21 7" />
-                        </svg>
-                      </div>
-                      <input
-                        id="email2"
-                        name="email"
-                        required
-                        class="w-full text-gray-800 focus:outline-none focus:border focus:border-blue-500 font-normal py-3 flex items-center pl-16 text-sm border-green-400 rounded border shadow"
-                        placeholder="example@gmail.com"
-                      />
-                    </div>
-                    <div
-                      class="flex justify-between items-center pt-1 text-green-400"
-                    >
-                      <p class="text-xs">Email submission success!</p>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                      >
-                        <path
-                          class="heroicon-ui"
-                          d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0
-                                                0 1-1.4
-                                                0l-2-2a1 1 0 0 1 1.4-1.42z"
-                          stroke="currentColor"
-                          stroke-width="0.25"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          fill="currentColor"
-                        ></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                    <label
-                      for="City"
-                      class="pb-2 text-sm font-bold text-gray-800"
-                      >City</label
+                      >学年</label
                     >
                     <div
                       class="border border-gray-300 shadow-sm rounded flex relative"
                     >
-                      <select
+                      <select v-model="course.year"
                         type="text"
-                        name="city"
+                        name="year"
                         required
-                        id="City"
+                        id="Year"
                         class="bg-transparent appearance-none z-10 pl-3 py-3 w-full text-sm border border-transparent focus:outline-none focus:border-blue-500 text-gray-800 rounded"
                       >
-                        <option value="Switzerland">Switzerland</option>
-                        <option value="America">America</option>
-                        <option value="Australia">Australia</option>
+                        <option value="year-option">请选择学年</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
                       </select>
                       <div
                         class="px-4 flex items-center border-l border-gray-300 flex-col justify-center text-gray-500 absolute right-0 bottom-0 top-0 mx-auto z-0"
                       >
-                        <svg
-                          tabindex="0"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="icon icon-tabler icon-tabler-chevron-up"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <polyline points="6 15 12 9 18 15" />
-                        </svg>
                         <svg
                           tabindex="0"
                           xmlns="http://www.w3.org/2000/svg"
@@ -457,105 +326,66 @@
                           stroke-linejoin="round"
                         >
                           <path stroke="none" d="M0 0h24v24H0z" />
-                          <polyline points="6 9 12 15 18 9" />
                         </svg>
                       </div>
                     </div>
                   </div>
+                  <!--学期-->
                   <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
                     <label
-                      for="StreetAddress"
+                      for="Term"
                       class="pb-2 text-sm font-bold text-gray-800"
-                      >Street Address</label
+                      >学期</label
                     >
-                    <input
-                      type="text"
-                      id="StreetAddress"
-                      name="streetAddress"
-                      required
-                      class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder=""
-                    />
-                  </div>
-                  <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                    <label
-                      for="Country"
-                      class="pb-2 text-sm font-bold text-gray-800"
-                      >Country</label
+                    <div
+                      class="border border-gray-300 shadow-sm rounded flex relative"
                     >
-                    <input
-                      type="text"
-                      id="Country"
-                      name="country"
-                      required
-                      class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder="California"
-                    />
-                  </div>
-                </div>
-                <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                  <label
-                    for="State/Province"
-                    class="pb-2 text-sm font-bold text-gray-800"
-                    >State/Province</label
-                  >
-                  <input
-                    type="text"
-                    id="State/Province"
-                    name="state"
-                    required
-                    class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                    placeholder="California"
-                  />
-                </div>
-                <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                  <div class="flex items-center pb-2">
-                    <label for="ZIP" class="text-sm font-bold text-gray-800"
-                      >ZIP/Postal Code</label
-                    >
-                    <div class="ml-2 cursor-pointer text-gray-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
+                      <select v-model="course.term"
+                        type="text"
+                        name="term"
+                        required
+                        id="Term"
+                        class="bg-transparent appearance-none z-10 pl-3 py-3 w-full text-sm border border-transparent focus:outline-none focus:border-blue-500 text-gray-800 rounded"
                       >
-                        <path
-                          class="heroicon-ui"
-                          d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0v-4a1 1 0 0 1 1-1zm0-4a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                          fill="currentColor"
-                        />
-                      </svg>
+                        <option value="term-option">请选择学期</option>
+                        <option value="上学期">上学期</option>
+                        <option value="下学期">下学期</option>
+                      </select>
+                      <div
+                        class="px-4 flex items-center border-l border-gray-300 flex-col justify-center text-gray-500 absolute right-0 bottom-0 top-0 mx-auto z-0"
+                      >
+                        <svg
+                          tabindex="0"
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-chevron-down"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-
-                  <input
-                    type="text"
-                    id="ZIP"
-                    name="zip"
-                    class="border border-red-400 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                    placeholder="e.g 86745"
-                  />
-                  <div
-                    class="flex justify-between items-center pt-1 text-red-400"
-                  >
-                    <p class="text-xs">Incorrect Zip Code</p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="feather feather-x-circle"
+                  <!--人数限制-->
+                  <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
+                    <label
+                      for="limit"
+                      class="pb-2 text-sm font-bold text-gray-800"
+                      >人数限制</label
                     >
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="15" y1="9" x2="9" y2="15"></line>
-                      <line x1="9" y1="9" x2="15" y2="15"></line>
-                    </svg>
+                    <input v-model="course.limit"
+                      type="text"
+                      id="limit"
+                      name="limit"
+                      class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
+                      placeholder="填写人数限制，没有限制请留空"
+                    />
                   </div>
                 </div>
               </div>
@@ -569,14 +399,14 @@
               v-on:click="backSteps('2')"
               class="btn text-sm focus:outline-none text-gray-600 border border-gray-300 py-2 px-6 mr-4 rounded hover:bg-gray-200 transition duration-150 ease-in-out"
             >
-              Back
+              上一步
             </button>
             <button
               type="button"
               v-on:click="handleSteps('2')"
               class="bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 rounded text-white px-8 py-2 text-sm focus:outline-none"
             >
-              Next
+              下一步
             </button>
           </div>
         </form>
@@ -587,183 +417,19 @@
             <div class="flex items-center w-11/12 mx-auto">
               <div class="container mx-auto">
                 <div class="mx-auto xl:w-full">
-                  <p class="text-lg text-gray-800 font-bold">Alerts</p>
-                  <p class="text-sm text-gray-500 pt-1">
-                    Get updates of any new activity or features. Turn on/off
-                    your preferences
-                  </p>
+                  <p class="text-sm text-gray-500 pt-1">课程名</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ course.name }}</p>
+                  <p class="text-sm text-gray-500 pt-1">描述</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ course.describe }}</p>
+                  <p class="text-sm text-gray-500 pt-1">学期</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ course.year }}-{{ course.term }}</p>
+                  <p class="text-sm text-gray-500 pt-1">人数限制</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ course.limit }}</p>
                 </div>
               </div>
             </div>
           </div>
           <form>
-            <div class="container mx-auto bg-white py-6 w-11/12">
-              <div class="flex items-center mb-8 text-gray-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-mail"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <polyline points="3 7 12 13 21 7" />
-                </svg>
-                <p class="text-sm font-bold ml-2 text-gray-800">Via Email</p>
-              </div>
-
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Comments</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a post or comment is made
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="email_comments"
-                    id="toggle1"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle1"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Job Applications</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a candidate applies to a job posting
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="email_job_application"
-                    id="toggle2"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle2"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Product Updates</p>
-                  <p class="text-sm text-gray-500">
-                    Get notifitied when there is a new product feature or
-                    upgrades
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="email_product_update"
-                    id="toggle3"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle3"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex items-center mb-8 mt-12 text-gray-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bell"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <path
-                    d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"
-                  />
-                  <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                </svg>
-                <p class="text-sm font-bold ml-2 text-gray-800">
-                  Push Notifications
-                </p>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Comments</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a post or comment is made
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="notification_comment"
-                    id="toggle4"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle4"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Job Applications</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a candidate applies to a job posting
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="notification_application"
-                    id="toggle5"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle5"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Product Updates</p>
-                  <p class="text-sm text-gray-500">
-                    Get notifitied when there is a new product feature or
-                    upgrades
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="notification_updates"
-                    id="toggle6"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle6"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-            </div>
             <div
               class="w-full py-4 sm:px-12 px-4 bg-gray-100 flex justify-end rounded-bl rounded-br"
             >
@@ -772,13 +438,13 @@
                 v-on:click="backSteps('3')"
                 class="btn text-sm focus:outline-none text-gray-600 border border-gray-300 py-2 px-6 mr-4 rounded hover:bg-gray-200 transition duration-150 ease-in-out"
               >
-                Back
+                上一步
               </button>
               <button
                 type="button"
                 class="bg-blue-500 focus:outline-none transition duration-150 ease-in-out hover:bg-blue-600 rounded text-white px-8 py-2 text-sm"
               >
-                Save
+                创建
               </button>
             </div>
           </form>
@@ -789,12 +455,19 @@
 </template>
 
 <script>
-import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+import TeacherSidebar from "../../../components/sidebar/teacher-sidebar";
 export default {
-  name: "HelloWorld",
+  name: "CreateCourse",
   components: {TeacherSidebar},
   data: function () {
     return {
+      course: {
+        name: '',
+        describe: '',
+        year: '',
+        term: '',
+        limit: ''
+      },
       menu: true,
       step1: true,
       step2: false,
