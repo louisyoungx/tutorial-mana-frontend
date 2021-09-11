@@ -32,7 +32,7 @@
 
 ##### 数据库mysql
 
-![前端架构 - TutorialManage](/Users/ericaaron/Developer/Git/tutorial-mana-frontend/docs/TutorialManage.jpg)
+![前端架构 - TutorialManage](./docs/TutorialManage.jpg)
 
 ## 安装教程
 
