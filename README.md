@@ -16,9 +16,13 @@
 
 ## 预览
 
+![mobile-page](./docs/mobile-page.png)
 
+![login-page](./docs/login-page.png)
 
-![截屏2021-09-11 下午10.43.47](/Users/ericaaron/Developer/Git/tutorial-mana-frontend/docs/截屏2021-09-11 下午10.43.47.png)
+![截屏2021-09-11 下午10.43.47](./docs/home-page.png)
+
+![tutorial-page](./docs/tutorial-page.png)
 
 ## 软件架构
 
