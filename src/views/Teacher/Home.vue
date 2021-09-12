@@ -164,14 +164,15 @@
             showState() {
                 console.log(this.$store.state)
             },
-            updateTeacher(id) {
-                api.update(id, 'teacher').then(info => {
+            updateTeacher() {
+                api.update(this.$store.state.id, 'teacher').then(info => {
                     console.log(info)
                     this.$store.commit('course', info[0])
                     this.$store.commit('tutorial', info[1])
                     this.$store.dispatch('courseList')
                     this.$store.dispatch('tutorialActivity')
                     this.$store.dispatch('tutorialData')
+                    // console.log(this.$store.state)
                 })
             },
         },

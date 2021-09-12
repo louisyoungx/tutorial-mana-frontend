@@ -7,7 +7,7 @@
                 <h2 class="text-gray-800 text-lg font-bold mb-4 sm:mb-0">
                     {{date}}
                 </h2>
-                <button
+                <button @click="createTutorial()"
                         class="flex items-center justify-center sm:justify-start font-normal divcolor transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none rounded text-white px-6 py-2 text-sm"
                 >
                     <svg
@@ -38,6 +38,11 @@ export default {
     name: "HelloWorld",
     props: {
         date: String
+    },
+    methods: {
+        createTutorial() {
+            this.$router.push(`/teacher/create/tutorial`)
+        },
     }
 };
 </script>

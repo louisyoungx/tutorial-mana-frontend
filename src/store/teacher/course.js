@@ -2,6 +2,7 @@ import api from '../../http/index'
 const course = {
     state: {
         course: [],
+        courseDelete: [],
         courseList: []
         // each_course = {
         //     academy: '测试与光电工程学院',
@@ -16,7 +17,15 @@ const course = {
     },
     mutations: {
         course(state, data) {
-            state.course = data
+            state.course = []
+            state.courseDelete = []
+            data.forEach(course => {
+                if (course.is_delete === false) {
+                    state.course.push(course)
+                } else {
+                    state.courseDelete.push(course)
+                }
+            })
         },
         courseList(state, data) {
             state.courseList = data

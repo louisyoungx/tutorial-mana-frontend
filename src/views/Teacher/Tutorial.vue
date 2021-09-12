@@ -2,12 +2,35 @@
   <div class="flex flex-no-wrap bg-gray-200">
     <teacher-sidebar></teacher-sidebar>
     <div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
+
       <div class="w-full rounded shadow bg-white mb-6">
         <div
           class="w-full bg-white py-3 md:py-6 px-4 md:px-8 flex flex-col md:flex-row md:items-center md:justify-between md:shadow rounded"
         >
           <h2 class="text-gray-800 text-xl">帮扶活动</h2>
+          <button @click="createTutorial()"
+                  class="flex items-center justify-center sm:justify-start font-normal divcolor transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none rounded text-white px-6 py-2 text-sm"
+          >
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="mr-2 mt-1 icon icon-tabler icon-tabler-refresh"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke=" currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" />
+              <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -5v5h5" />
+              <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 5v-5h-5" />
+            </svg>
+            发起帮扶活动
+          </button>
         </div>
+
       </div>
 
       <div
@@ -334,7 +357,7 @@
                 <td
                   class="text-gray-600 font-normal pr-8 text-left text-sm tracking-normal leading-4"
                 >
-                  更多
+                  编辑
                 </td>
               </tr>
             </thead>
@@ -393,26 +416,34 @@
                       </li>
                     </ul>
                   </div>
-                  <button class="text-gray-500 rounded cursor-pointer border border-transparent focus:outline-none">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      onclick="dropdownFunction(this)"
-                      class="icon icon-tabler icon-tabler-dots"
-                      width="28"
-                      height="28"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <circle cx="5" cy="12" r="1" />
-                      <circle cx="12" cy="12" r="1" />
-                      <circle cx="19" cy="12" r="1" />
-                    </svg>
-                  </button>
+                  <a @click="deleteTutorial(activity.id)" class="rounded border border-transparent focus:outline-none focus:border-gray-800 focus:shadow-outline-gray">
+                    <div class="cursor-pointer text-red-500 flex items-center">
+                      <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="icon icon-tabler icon-tabler-trash"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z"></path>
+                        <line x1="4" y1="7" x2="20" y2="7"></line>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                        <path
+                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                        ></path>
+                        <path
+                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                        ></path>
+                      </svg>
+                      <p class="ml-2 text-gray-600">删除</p>
+                    </div>
+                  </a>
                 </td>
               </tr>
             </tbody>
@@ -425,8 +456,9 @@
 
 <script>
 import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+import api from "../../http";
 export default {
-  name: "HelloWorld",
+  name: "Tutorial",
   components: {TeacherSidebar},
   data: function () {
     return {
@@ -440,28 +472,6 @@ export default {
           total: 0,
           course: 0
       },
-      users: [
-        {
-          id: "1",
-          name: "Shad Jast",
-          lastComment: "You can access the webapp through here",
-        },
-        {
-          id: "2",
-          name: "Duane Metz",
-          lastComment: "You can access the webapp through here",
-        },
-        {
-          id: "3",
-          name: "Myah Kris",
-          lastComment: "You can access the webapp through here",
-        },
-        {
-          id: "4",
-          name: "Dr. Kamron Wunsch",
-          lastComment: "You can access the webapp through here",
-        },
-      ],
       selected: [],
     };
   },
@@ -484,10 +494,7 @@ export default {
     },
   },
   created() {
-    this.avatar = this.$store.state.avatar;
-    this.tutorialData = this.deepClone(this.$store.state.tutorial.tutorialData)
-    this.tutorialActivity = this.deepClone(this.$store.state.tutorial.tutorialActivity)
-    console.log(this.tutorialActivity)
+    this.updateTeacher()
   },
   methods: {
     sidebarHandler() {
@@ -495,9 +502,39 @@ export default {
       let single = document.getElementById("menuList");
       single.classList.toggle("hidden");
     },
+
     deepClone(obj) {
       return JSON.parse(JSON.stringify(obj))
     },
+
+    deleteTutorial(id) {
+      api.deleteTutorial(id).then(res => {
+        if (res === 'success') {
+          this.updateTeacher()
+        }
+      })
+    },
+
+    createTutorial() {
+      this.$router.push(`/teacher/create/tutorial`)
+    },
+
+    updateTeacher() {
+      api.update(this.$store.state.id, 'teacher').then(info => {
+        console.log(info)
+        this.$store.commit('course', info[0])
+        this.$store.commit('tutorial', info[1])
+        this.$store.dispatch('courseList')
+        this.$store.dispatch('tutorialActivity')
+        this.$store.dispatch('tutorialData')
+        this.avatar = this.$store.state.avatar;
+        this.tutorialData = this.deepClone(this.$store.state.tutorial.tutorialData)
+        this.tutorialActivity = this.deepClone(this.$store.state.tutorial.tutorialActivity)
+        console.log(this.tutorialActivity)
+        // console.log(this.$store.state)
+      })
+    },
+
   },
 };
 </script>

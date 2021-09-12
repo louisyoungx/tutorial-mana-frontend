@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-no-wrap bg-gray-200">
-    <teacher-sidebar></teacher-sidebar>
+    <teacher-sidebar/>
+    <modals :title="modals.title" :open="modals.open" :remind="modals.remind" :confirm="modals.confirm" :cancel="modals.cancel" />
     <div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
       <div class="w-full bg-white py-5 px-5 sm:px-10 sm:shadow rounded">
         <h2 class="text-gray-700 text-2xl mb-4 sm:mb-0">创建课程</h2>
@@ -214,6 +215,7 @@
                 >
                 <input v-model="course.name"
                   type="text"
+                  maxlength="10"
                   id="username"
                   name="username"
                   class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
@@ -227,6 +229,7 @@
                   >描述</label
                 >
                 <textarea v-model="course.describe"
+                  maxlength="50"
                   id="about"
                   name="about"
                   class="border border-gray-300 pl-3 py-2 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 resize-none text-gray-800"
@@ -301,7 +304,6 @@
                         id="Year"
                         class="bg-transparent appearance-none z-10 pl-3 py-3 w-full text-sm border border-transparent focus:outline-none focus:border-blue-500 text-gray-800 rounded"
                       >
-                        <option value="year-option">请选择学年</option>
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
@@ -347,7 +349,6 @@
                         id="Term"
                         class="bg-transparent appearance-none z-10 pl-3 py-3 w-full text-sm border border-transparent focus:outline-none focus:border-blue-500 text-gray-800 rounded"
                       >
-                        <option value="term-option">请选择学期</option>
                         <option value="上学期">上学期</option>
                         <option value="下学期">下学期</option>
                       </select>
@@ -380,7 +381,7 @@
                       >人数限制</label
                     >
                     <input v-model="course.limit"
-                      type="text"
+                      type="number"
                       id="limit"
                       name="limit"
                       class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
@@ -440,7 +441,7 @@
               >
                 上一步
               </button>
-              <button
+              <button @click="createCourseCheck()"
                 type="button"
                 class="bg-blue-500 focus:outline-none transition duration-150 ease-in-out hover:bg-blue-600 rounded text-white px-8 py-2 text-sm"
               >
@@ -456,9 +457,31 @@
 
 <script>
 import TeacherSidebar from "../../../components/sidebar/teacher-sidebar";
+import { ref } from 'vue'
+import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { ExclamationIcon } from '@heroicons/vue/outline'
+import Modals from "../../../components/overlays/modals";
+import Notifications from "../../../components/overlays/notifications";
+import api from "../../../http";
+
 export default {
   name: "CreateCourse",
-  components: {TeacherSidebar},
+  components: {
+    Notifications,
+    Modals, TeacherSidebar,
+    Dialog,
+    DialogOverlay,
+    DialogTitle,
+    TransitionChild,
+    TransitionRoot,
+    ExclamationIcon,
+  },
+  setup() {
+    const open = ref(true)
+    return {
+      open,
+    }
+  },
   data: function () {
     return {
       course: {
@@ -468,6 +491,13 @@ export default {
         term: '',
         limit: ''
       },
+      modals: {
+        modals: '错误',
+        open: false,
+        remind: '',
+        confirm: '修改',
+        cancel: '取消'
+      },
       menu: true,
       step1: true,
       step2: false,
@@ -475,6 +505,71 @@ export default {
     };
   },
   methods: {
+
+    createCourseCheck() {
+      let tag = false
+      if (this.course.name === '') {
+        this.modals.remind += '课程名不能为空\r\n'
+        tag = true
+      }
+      if (this.course.describe === '') {
+        this.modals.remind += '课程描述不能为空\r\n'
+        tag = true
+      }
+      if (this.course.year === '') {
+        this.modals.remind += '学年不能为空（例如：2021）\r\n'
+        tag = true
+      }
+      if (this.course.term === '') {
+        this.modals.remind += '学期不能为空（上学期/下学期)\r\n'
+        tag = true
+      }
+
+      if (tag === true) {
+        this.modals.open = true
+      } else {
+        this.createCourseHandler()
+      }
+
+    },
+
+    createCourseHandler() {
+      let teacher_id = this.$store.state.id
+      let data = {
+        "teacher_id": teacher_id,
+        "name": this.course.name,
+        "wallpaper": "http://www.louisyoung.site:8002/TutorialManage/wallpaper.jpg",
+        "describe": this.course.describe,
+        "term": this.course.year + '-' + this.course.term,
+        "limit": Number(this.course.limit),
+      }
+      api.createCourse(data).then(res => {
+        if (res.name === this.course.name) {
+          console.log("创建成功：", res.name)
+          this.updateTeacher()
+          this.$router.push('/teacher/course')
+        } else {
+          this.modals.remind += ''
+          for (let item in res) {
+            this.modals.remind += res[item] + '\r\n'
+          }
+          this.modals.open = true
+        }
+      })
+    },
+
+    updateTeacher() {
+      api.update(this.$store.state.id, 'teacher').then(info => {
+        console.log(info)
+        this.$store.commit('course', info[0])
+        this.$store.commit('tutorial', info[1])
+        this.$store.dispatch('courseList')
+        this.$store.dispatch('tutorialActivity')
+        this.$store.dispatch('tutorialData')
+        // console.log(this.$store.state)
+      })
+    },
+
     handleSteps(id) {
       if (id === "1") {
         this.step1 = false;

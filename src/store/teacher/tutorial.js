@@ -2,6 +2,7 @@ import api from '../../http/index'
 const tutorial = {
     state: {
         tutorial: [],
+        tutorialDelete: [],
         tutorialData: {
             activity: undefined,
             single: undefined,
@@ -30,9 +31,14 @@ const tutorial = {
     },
     mutations: {
         tutorial(state, data) {
-            state.tutoriala = data
-            data.forEach(item => {
-                console.log(item)
+            state.tutorial = []
+            state.tutorialDelete = []
+            data.forEach(tutorial => {
+                if (tutorial.is_delete === false) {
+                    state.tutorial.push(tutorial)
+                } else {
+                    state.tutorialDelete.push(tutorial)
+                }
             })
         },
         tutorialData(state, data) {
@@ -52,16 +58,17 @@ const tutorial = {
             state.tutorial.forEach(activity => {
                 totalNum += activity.joined_num
                 let start_time = transformTimestamp(activity.start_time)
-                let end_time  = new Date(activity.end_time)
+                let duration_time  = new Date(activity.duration_time)
                 let now_time = new Date()
                 let active = true
-                if (now_time > end_time) {
+                if (now_time > start_time) {
                     active = false
                 }
                 let each_activity = {
                     id: activity.id,
                     day: start_time.dayString,
                     time: start_time.timeString,
+                    duration_time: duration_time,
                     date: start_time.dateString,
                     active: active,
                     title: activity.course_name + '-' + rootState.name,

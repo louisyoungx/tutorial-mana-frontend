@@ -36,14 +36,14 @@
                         </div>
                     </li>
                 </router-link>
-                <router-link to="/teacher/quest">
+                <router-link to="/teacher/course">
                     <li
                             class="flex w-full justify-between text-gray-400 hover:text-gray-300 hover:bg-blue-800 cursor-pointer items-center px-8 py-3"
                     >
                         <div class="flex items-center">
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-compass"
+                                    class="icon icon-tabler icon-tabler-puzzle"
                                     width="18"
                                     height="18"
                                     viewBox="0 0 24 24"
@@ -54,10 +54,11 @@
                                     stroke-linejoin="round"
                             >
                                 <path stroke="none" d="M0 0h24v24H0z"/>
-                                <polyline points="8 16 10 10 16 8 14 14 8 16"/>
-                                <circle cx="12" cy="12" r="9"/>
+                                <path
+                                        d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1"
+                                />
                             </svg>
-                            <span class="text-sm ml-2">学生请求</span>
+                            <span class="text-sm ml-2">管理的课程</span>
                         </div>
                     </li>
                 </router-link>
@@ -110,6 +111,31 @@
                                 />
                             </svg>
                             <span class="text-sm ml-2">已帮扶学生</span>
+                        </div>
+                    </li>
+                </router-link>
+                <router-link to="/teacher/quest">
+                    <li
+                            class="flex w-full justify-between text-gray-400 hover:text-gray-300 hover:bg-blue-800 cursor-pointer items-center px-8 py-3"
+                    >
+                        <div class="flex items-center">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-compass"
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            >
+                                <path stroke="none" d="M0 0h24v24H0z"/>
+                                <polyline points="8 16 10 10 16 8 14 14 8 16"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                            <span class="text-sm ml-2">学生请求</span>
                         </div>
                     </li>
                 </router-link>
@@ -309,14 +335,14 @@
                                 </div>
                             </li>
                         </router-link>
-                        <router-link to="/teacher/quest">
+                        <router-link to="/teacher/course">
                             <li
                                     class="flex w-full justify-between text-gray-400 hover:text-gray-300 hover:bg-blue-800 cursor-pointer items-center px-8 py-3"
                             >
                                 <div class="flex items-center">
                                     <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-compass"
+                                            class="icon icon-tabler icon-tabler-puzzle"
                                             width="18"
                                             height="18"
                                             viewBox="0 0 24 24"
@@ -327,10 +353,11 @@
                                             stroke-linejoin="round"
                                     >
                                         <path stroke="none" d="M0 0h24v24H0z"/>
-                                        <polyline points="8 16 10 10 16 8 14 14 8 16"/>
-                                        <circle cx="12" cy="12" r="9"/>
+                                        <path
+                                                d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1"
+                                        />
                                     </svg>
-                                    <span class="text-sm ml-2">学生请求</span>
+                                    <span class="text-sm ml-2">管理的课程</span>
                                 </div>
                             </li>
                         </router-link>
@@ -383,6 +410,31 @@
                                         />
                                     </svg>
                                     <span class="text-sm ml-2">已帮扶学生</span>
+                                </div>
+                            </li>
+                        </router-link>
+                        <router-link to="/teacher/quest">
+                            <li
+                                    class="flex w-full justify-between text-gray-400 hover:text-gray-300 hover:bg-blue-800 cursor-pointer items-center px-8 py-3"
+                            >
+                                <div class="flex items-center">
+                                    <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-compass"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                            fill="none"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                    >
+                                        <path stroke="none" d="M0 0h24v24H0z"/>
+                                        <polyline points="8 16 10 10 16 8 14 14 8 16"/>
+                                        <circle cx="12" cy="12" r="9"/>
+                                    </svg>
+                                    <span class="text-sm ml-2">学生请求</span>
                                 </div>
                             </li>
                         </router-link>

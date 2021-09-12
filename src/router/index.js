@@ -6,6 +6,7 @@ const  TeacherHome = () => import('../views/Teacher/Home')
 const  TeacherQuest = () => import('../views/Teacher/Quest')
 const  TeacherSettings = () => import('../views/Teacher/Settings')
 const  TeacherStudent = () => import('../views/Teacher/Student')
+const  TeacherCourse = () => import('../views/Teacher/Course')
 const  TeacherTutorial = () => import('../views/Teacher/Tutorial')
 const  CreateCourse = () => import('../views/Teacher/Create/CreateCourse')
 const  CreateTutorial = () => import('../views/Teacher/Create/CreateTutorial')
@@ -35,6 +36,11 @@ const routes = [
     path: '/teacher/student',
     name: 'TeacherStudent',
     component: TeacherStudent
+  },
+  {
+    path: '/teacher/course',
+    name: 'TeacherCourse',
+    component: TeacherCourse
   },
   {
     path: '/teacher/tutorial',

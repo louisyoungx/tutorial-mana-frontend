@@ -8,63 +8,6 @@ class API {
         }
     }
 
-    signIn(uid, type) {
-        let url = '/' + type
-        let data = {
-            uid : uid
-        }
-        return this.GET(url, data)
-    }
-
-    update(id, type) {
-        if (type === 'teacher') {
-            return this.updateTeacher(id)
-        }
-        else if (type === 'student') {
-            return this.updateStudent(id)
-        }
-    }
-
-    updateTeacher(id) {
-        return Promise.all([this.course(id), this.tutorial(id)])
-    }
-
-    course(id) {
-        let url = '/course/'
-        let data = {
-            teacher_id : id
-        }
-        return this.GET(url, data)
-    }
-
-    tutorial(id) {
-        let url = '/tutorial/'
-        let data = {
-            teacher_id : id
-        }
-        return this.GET(url, data)
-    }
-
-    updateStudent(id) {
-        return Promise.all([this.joinedCourse(id), this.joinedTutorial(id)])
-    }
-
-    joinedCourse(id) {
-        let url = '/join-course/'
-        let data = {
-            student_id : id
-        }
-        return this.GET(url, data)
-    }
-
-    joinedTutorial(id) {
-        let url = '/join-tutorial/'
-        let data = {
-            student_id : id
-        }
-        return this.GET(url, data)
-    }
-
 
     GET(url, data) {
         url = '/api' + url
@@ -128,6 +71,37 @@ class API {
             })
     }
 
+    DELETE(url, data) {
+        url = '/api' + url
+        if (url.substr(url.length-1,1) !== '/' ) {
+            url = url + '/'
+        }
+        // Default options are marked with *
+        return fetch(url, {
+            body: JSON.stringify(data), // must match 'Content-Type' header
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, same-origin, *omit
+            headers: {
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // *client, no-referrer
+        })
+            .then(response => { // parses response to JSON
+                return response.json().then(res => {
+                    if (this.DEBUG) console.log(res)
+                    return res
+                })
+            })
+            .catch(error => {
+                if (this.DEBUG) console.error(error)
+                console.error(error)
+            })
+    }
+
     urlParams() {
         let obj = arguments[0];
         let prefix = arguments[1];
@@ -151,6 +125,100 @@ class API {
             return query;
         }, "");
     }
+
+    signIn(uid, type) {
+        let url = '/' + type
+        let data = {
+            uid : uid
+        }
+        return this.GET(url, data)
+    }
+
+    update(id, type) {
+        if (type === 'teacher') {
+            return this.updateTeacher(id)
+        }
+        else if (type === 'student') {
+            return this.updateStudent(id)
+        }
+    }
+
+    updateTeacher(id) {
+        return Promise.all([this.course(id), this.tutorial(id)])
+    }
+
+    course(id) {
+        let url = '/course/'
+        let data = {
+            teacher_id : id
+        }
+        return this.GET(url, data)
+    }
+
+    tutorial(id) {
+        let url = '/tutorial/'
+        let data = {
+            teacher_id : id
+        }
+        return this.GET(url, data)
+    }
+
+    updateStudent(id) {
+        return Promise.all([this.joinedCourse(id), this.joinedTutorial(id)])
+    }
+
+    joinedCourse(id) {
+        let url = '/join-course/'
+        let data = {
+            student_id : id
+        }
+        return this.GET(url, data)
+    }
+
+    joinedTutorial(id) {
+        let url = '/join-tutorial/'
+        let data = {
+            student_id : id
+        }
+        return this.GET(url, data)
+    }
+
+    createCourse(data) {
+        let url = '/course/'
+        // let data = {
+        //     "teacher_id": "1",
+        //     "name": "近代史纲要",
+        //     "wallpaper": "http://www.louisyoung.site:8002/TutorialManage/wallpaper.jpg",
+        //     "describe": "没有描述",
+        //     "term": "2020-上学期",
+        //     "limit": 0
+        // }
+        return this.POST(url, data)
+    }
+
+    createTutorial(data) {
+        let url = '/tutorial/'
+        // let data = {
+        //     "course_id": "8",
+        //     "describe": "1808152",
+        //     "start_time":"2021-09-05T00:26:00+08:00",
+        //     "end_time": "2021-09-06T00:26:00+08:00",
+        //     "place": "A栋"
+        // }
+        return this.POST(url, data)
+    }
+
+    deleteCourse(id) {
+        let url = `/course/${id}/delete/`
+        return this.DELETE(url, {})
+    }
+
+    deleteTutorial(id) {
+        let url = `/tutorial/${id}/delete/`
+        return this.DELETE(url, {})
+    }
+
+
 }
 
 class StudentUrl {
