@@ -164,7 +164,7 @@ class API {
     }
 
     updateStudent(id) {
-        return Promise.all([this.joinedCourse(id), this.joinedTutorial(id)])
+        return Promise.all([this.joinedCourse(id), this.joinedTutorial(id), this.courseSelect(), this.tutorialSelect()])
     }
 
     joinedCourse(id) {
@@ -181,6 +181,16 @@ class API {
             student_id : id
         }
         return this.GET(url, data)
+    }
+
+    courseSelect() {
+        let url = '/course/'
+        return this.GET(url, {})
+    }
+
+    tutorialSelect() {
+        let url = '/tutorial/'
+        return this.GET(url, {})
     }
 
     createCourse(data) {

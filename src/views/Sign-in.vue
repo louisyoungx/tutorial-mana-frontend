@@ -246,7 +246,8 @@
             }
         },
         created() {
-            this.signInHandler('123456', 'teacher')
+            // this.signInHandler('123456', 'teacher')
+            this.signInHandler('18085132', 'student')
         },
 
         methods: {
@@ -289,7 +290,7 @@
                         this.$store.commit('type', type)
                         this.$store.commit('init', res[0])
                         this.updateHandler(type)
-                        this.$router.push(`/${type}/home-page`)
+                        // this.$router.push(`/${type}/home-page`)
                     } else {
                         console.log('Login Failed')
                         this.updateHandler(type)
@@ -312,7 +313,11 @@
                     console.log(info)
                     this.$store.commit('joinedCourse', info[0])
                     this.$store.commit('joinedTutorial', info[1])
-                    // console.log(this.$store.state)
+                    this.$store.commit('courseSelect', info[2])
+                    this.$store.commit('tutorialSelect', info[3])
+                    this.$store.dispatch('courseSelecting')
+                    this.$store.dispatch('tutorialSelecting')
+                    console.log(this.$store.state)
                 })
             },
 

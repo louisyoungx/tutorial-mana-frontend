@@ -7,7 +7,8 @@
             <!--日期-->
             <header-data :date=todayDate />
             <!--帮扶数据-->
-            <teacher-header :activity=tutorialData.activity :single=tutorialData.single :total=tutorialData.total :course=tutorialData.course />
+            <teacher-header :activity=tutorialData.activity :single=tutorialData.single :total=tutorialData.total
+                            :course=tutorialData.course />
 
             <!--现有帮扶活动-->
             <content-full>
@@ -58,9 +59,9 @@
                                 :avatar="quest.avatar"
                         />
                     </content-container>
-<!--                    <content-container title="帮扶日程">-->
-<!--                        <tutorial-accept-card/>-->
-<!--                    </content-container>-->
+                    <!--                    <content-container title="帮扶日程">-->
+                    <!--                        <tutorial-accept-card/>-->
+                    <!--                    </content-container>-->
                 </div>
 
             </content-half>
@@ -98,61 +99,78 @@
             ContentFull,
             ContainerContent,
             ContainerBody,
-            TutorialActivityCard, CourseCard, DashTrending, DashTask, DashModes, TeacherHeader, HeaderData, TeacherSidebar
+            TutorialActivityCard,
+            CourseCard,
+            DashTrending,
+            DashTask,
+            DashModes,
+            TeacherHeader,
+            HeaderData,
+            TeacherSidebar
         },
         data: function () {
             return {
                 todayDate: '',
                 tutorialData: {},
-                    // {
-                    //     activity: 0,
-                    //     single: 0,
-                    //     total: 0,
-                    //     course: 0
-                    // },
+                // {
+                //     activity: 0,
+                //     single: 0,
+                //     total: 0,
+                //     course: 0
+                // },
                 tutorialActivity: [],
-                    // {
-                    //     time: '19:00:00',
-                    //     date: '2021-09-01  19:00:00',
-                    //     title: '高等数学 - 赵老师',
-                    //     describe: '高等数学，线性代数',
-                    //     attendees: 10,
-                    //     location: 'A教学楼',
-                    //     wallpaper: 'https://tuk-cdn.s3.amazonaws.com/assets/components/grid_cards/gc_27.png',
-                    //     avatar: [
-                    //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card8.jpg',
-                    //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card9.jpg',
-                    //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card10.jpg',
-                    //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card11.jpg',
-                    //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card12.jpg',
-                    //     ]
-                    // }
+                // {
+                //     time: '19:00:00',
+                //     date: '2021-09-01  19:00:00',
+                //     title: '高等数学 - 赵老师',
+                //     describe: '高等数学，线性代数',
+                //     attendees: 10,
+                //     location: 'A教学楼',
+                //     wallpaper: 'https://tuk-cdn.s3.amazonaws.com/assets/components/grid_cards/gc_27.png',
+                //     avatar: [
+                //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card8.jpg',
+                //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card9.jpg',
+                //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card10.jpg',
+                //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card11.jpg',
+                //         'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card12.jpg',
+                //     ]
+                // }
                 courses: [],
-                    // {
-                    //     academy: '测试与光电工程学院',
-                    //     name: '高等数学',
-                    //     describe: '',
-                    //     term: '2020上学期',
-                    //     limit: 10,
-                    //     teacher: 'Louis',
-                    //     phone: '17369661665',
-                    //     avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png',
-                    // }
-                studentQuest: []
-                    // {
-                    //     uid: '18085132',
-                    //     name: '曾建雄',
-                    //     tel: '18278654592',
-                    //     email: '1382736598@qq.com',
-                    //     expectTime: '2021/09/21-19:00',
-                    //     avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png'
-                    // },
+                // {
+                //     academy: '测试与光电工程学院',
+                //     name: '高等数学',
+                //     describe: '',
+                //     term: '2020上学期',
+                //     limit: 10,
+                //     teacher: 'Louis',
+                //     phone: '17369661665',
+                //     avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png',
+                // }
+                studentQuest: [
+                    {
+                        uid: '18085132',
+                        name: '曾建雄',
+                        tel: '18278654592',
+                        email: '1382736598@qq.com',
+                        expectTime: '2021/09/21-19:00',
+                        avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png'
+                    },
+                    {
+                        uid: '18085132',
+                        name: '曾建雄',
+                        tel: '18278654592',
+                        email: '1382736598@qq.com',
+                        expectTime: '2021/09/21-19:00',
+                        avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png'
+                    },
+                ]
+
             };
         },
         methods: {
             init() {
                 let today = new Date()
-                this.todayDate = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+                this.todayDate = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
                 this.tutorialData = this.deepClone(this.$store.state.tutorial.tutorialData)
                 this.tutorialActivity = this.deepClone(this.$store.state.tutorial.tutorialActivity)
                 this.courses = this.deepClone(this.$store.state.course.courseList)

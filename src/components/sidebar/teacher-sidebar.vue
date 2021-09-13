@@ -611,10 +611,15 @@
         data: function () {
             return {
                 menu: false,
-                avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_5.png',
-                name: 'louis',
-                uid: '18085132',
+                avatar: '',
+                name: '',
+                uid: '',
             };
+        },
+        created() {
+            this.avatar = this.$store.state.avatar
+            this.name = this.$store.state.name
+            this.uid = this.$store.state.uid
         },
         methods: {
             sidebarHandler() {

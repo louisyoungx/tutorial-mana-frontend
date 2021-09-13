@@ -1,6 +1,6 @@
 <template>
     <a href="">
-        <div class="shadow px-4 py-5 border-b-4 border-gray-800 md:max-w-sm md:mr-5 mb-6  ">
+        <div class="shadow px-4 py-5 md:max-w-sm md:mr-5 mb-6  ">
             <h5 class="mb-2 text-sm text-gray-600">
                 {{academy}}
             </h5>
