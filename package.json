@@ -13,7 +13,7 @@
     "@heroicons/vue": "^1.0.4",
     "@tailwindcss/forms": "^0.3.3",
     "autoprefixer": "^9",
-    "compression-webpack-plugin": "^9.0.0",
+    "compression-webpack-plugin": "5.0.1",
     "core-js": "^3.6.5",
     "npm": "^7.21.1",
     "postcss": "^7",
