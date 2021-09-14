@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-no-wrap bg-gray-200">
-    <teacher-sidebar></teacher-sidebar>
+    <student-sidebar></student-sidebar>
     <modals :title="modals.title" :open="modals.open" :remind="modals.remind" :confirm="modals.confirm" :cancel="modals.cancel" />
     <div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
       <div class="w-full bg-white py-5 px-5 sm:px-10 sm:shadow rounded">
@@ -444,12 +444,12 @@
 </template>
 
 <script>
-  import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+  import StudentSidebar from "../../components/sidebar/student-sidebar";
   import api from "../../http";
   import Modals from "../../components/overlays/modals";
   export default {
     name: "StudentSettings",
-    components: {Modals, TeacherSidebar},
+    components: {Modals, StudentSidebar},
     data: function () {
       return {
         user: {
