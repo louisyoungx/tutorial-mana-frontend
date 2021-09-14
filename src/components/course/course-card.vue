@@ -1,5 +1,5 @@
 <template>
-    <a href="">
+    <a>
         <div class="shadow px-4 py-5 md:max-w-sm md:mr-5 mb-6  ">
             <h5 class="mb-2 text-sm text-gray-600">
                 {{academy}}
@@ -58,6 +58,14 @@
                     <p class="text-xs text-gray-600">手机: {{phone}}</p>
                 </div>
             </div>
+            <div v-if="showButton" class="mt-8 flex justify-around" >
+                <button @click="this.$emit('accept', $event.target.value)" type="button" class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-blue-900 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    添加
+                </button>
+                <button @click="this.$emit('cancel', $event.target.value)" class="ml-3 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    取消
+                </button>
+            </div>
         </div>
     </a>
 </template>
@@ -73,8 +81,10 @@
             limit: Number,
             teacher: String,
             phone: String,
-            avatar: String
-        }
+            avatar: String,
+            showButton: Boolean,
+        },
+        emits: ['accept', 'cancel']
     }
 </script>
 

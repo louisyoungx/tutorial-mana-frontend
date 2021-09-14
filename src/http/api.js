@@ -71,6 +71,37 @@ class API {
             })
     }
 
+    PUT(url, data) {
+        url = '/api' + url
+        if (url.substr(url.length-1,1) !== '/' ) {
+            url = url + '/'
+        }
+        // Default options are marked with *
+        return fetch(url, {
+            body: JSON.stringify(data), // must match 'Content-Type' header
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, same-origin, *omit
+            headers: {
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // *client, no-referrer
+        })
+            .then(response => { // parses response to JSON
+                return response.json().then(res => {
+                    if (this.DEBUG) console.log(res)
+                    return res
+                })
+            })
+            .catch(error => {
+                if (this.DEBUG) console.error(error)
+                console.error(error)
+            })
+    }
+
     DELETE(url, data) {
         url = '/api' + url
         if (url.substr(url.length-1,1) !== '/' ) {
@@ -134,6 +165,25 @@ class API {
         return this.GET(url, data)
     }
 
+    signUp(data, type) {
+        let url = '/' + type
+        return this.POST(url, data)
+    }
+
+    changeUser(data, type) {
+        let url = '/' + type + `/${data.id}/put`
+        // let data = {
+        //     "uid": "18085126",
+        //     "name": "高级擀面杖",
+        //     "avatar": "http://www.louisyoung.site:8002/TutorialManage/avatar.jpg",
+        //     "wechat_id": "",
+        //     "phone": "17369661665",
+        //     "email": "1462648167@qq.com",
+        //     "location": "A教学楼402"
+        // }
+        return this.PUT(url, data)
+    }
+
     update(id, type) {
         if (type === 'teacher') {
             return this.updateTeacher(id)
@@ -191,6 +241,34 @@ class API {
     tutorialSelect() {
         let url = '/tutorial/'
         return this.GET(url, {})
+    }
+
+    appendCourse(data) {
+        let url = '/join-course/'
+        // let data = {
+        //     "student_id": 1,
+        //     "course_id": 8,
+        // }
+        return this.POST(url, data)
+    }
+
+    appendTutorial(data) {
+        let url = '/join-tutorial/'
+        // let data = {
+        //     "student_id": 1,
+        //     "tutorial_id": 6,
+        // }
+        return this.POST(url, data)
+    }
+
+    deleteJoinedCourse(id) {
+        let url = `/join-course/${id}/delete/`
+        return this.DELETE(url, {})
+    }
+
+    deleteJoinedTutorial(id) {
+        let url = `/join-tutorial/${id}/delete/`
+        return this.DELETE(url, {})
     }
 
     createCourse(data) {

@@ -178,7 +178,7 @@
                       </g>
                     </svg>
                     <p class="text-xs text-gray-600 leading-4">
-                      Let your colleagues know who you are
+                      让我们知道你是谁
                     </p>
                   </div>
                   <div class="ml-2 cursor-pointer">
@@ -508,6 +508,7 @@ export default {
 
     createCourseCheck() {
       let tag = false
+      this.modals.remind = ''
       if (this.course.name === '') {
         this.modals.remind += '课程名不能为空\r\n'
         tag = true
@@ -606,14 +607,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
-body {
-  font-family: "Lato", sans-serif;
-}
-/* shows controls on hover */
-.controls {
-  opacity: 0;
-}
 .trigger:hover .controls {
   opacity: 1;
 }
@@ -628,19 +621,6 @@ body {
 .checkbox:checked + .toggle-label {
   /* Apply class bg-indigo-700 */
   background-color: #4299e1;
-}
-
-.divcolor {
-  background-color: #4299e1;
-}
-.buttoncolor {
-  background-color: #667eea;
-}
-.text-color {
-  color: #4a5568;
-}
-.height {
-  height: 0.313rem;
 }
 </style>
 

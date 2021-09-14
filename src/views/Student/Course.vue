@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-no-wrap bg-gray-200">
-    <teacher-sidebar/>
+    <student-sidebar/>
     <div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
       <div class="w-full bg-white py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between px-5 sm:px-10 sm:shadow rounded">
-        <h2 class="text-gray-700 text-2xl mb-4 sm:mb-0">管理的课程</h2>
-        <router-link to="/teacher/create/course"
+        <h2 class="text-gray-700 text-2xl mb-4 sm:mb-0">参加的课程</h2>
+        <router-link to="/student/append/course"
         ><button
                 class="flex items-center justify-center sm:justify-start font-normal bg-blue-600 transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none rounded text-white px-4 py-2 text-sm"
         >
@@ -24,7 +24,7 @@
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-          创建新的课程
+          添加新的课程
         </button></router-link
         >
       </div>
@@ -91,21 +91,21 @@
               <div class="flex items-center flex-no-wrap">
                 <div class="w-12 h-12 bg-cover bg-center rounded-md">
                   <img
-                          src="http://www.louisyoung.site:8002/TutorialManage/avatar.jpg"
+                          src="../../assets/images/posts-1.png"
                           alt=""
                           class="h-full w-full overflow-hidden object-cover rounded-md border-2 border-white shadow"
                   />
                 </div>
                 <div class="w-12 h-12 bg-cover rounded-md -ml-2">
                   <img
-                          src="http://www.louisyoung.site:8002/TutorialManage/avatar.jpg"
+                          src="../../assets/images/posts-2.png"
                           alt=""
                           class="h-full w-full overflow-hidden object-cover rounded-md border-2 border-white shadow"
                   />
                 </div>
                 <div class="w-12 h-12 bg-cover rounded-md bg-center -ml-2">
                   <img
-                          src="http://www.louisyoung.site:8002/TutorialManage/avatar.jpg"
+                          src="../../assets/images/posts-3.png"
                           alt=""
                           class="h-full w-full overflow-hidden object-cover rounded-md border-2 border-white shadow"
                   />
@@ -144,7 +144,7 @@
 <!--                  </div>-->
 <!--                </a>-->
 <!--                <p class="mx-3">|</p>-->
-                <a @click="deleteCourse(course.id)" class="rounded border border-transparent focus:outline-none focus:border-gray-800 focus:shadow-outline-gray">
+                <a @click="deleteCourse(course.select_id)" class="rounded border border-transparent focus:outline-none focus:border-gray-800 focus:shadow-outline-gray">
                   <div class="cursor-pointer text-red-500 flex items-center">
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -183,11 +183,11 @@
 </template>
 
 <script>
-  import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+  import StudentSidebar from "../../components/sidebar/student-sidebar";
   import api from "../../http";
   export default {
-    name: "TeacherCourse",
-    components: {TeacherSidebar},
+    name: "StudentCourse",
+    components: {StudentSidebar},
     data: function () {
       return {
         menu: true,
@@ -195,8 +195,8 @@
       };
     },
     created() {
-      this.courses = this.deepClone(this.$store.state.course.course)
-      // this.updateTeacher()
+      this.courses = this.deepClone(this.$store.state.student.courseSelected)
+      // this.updateStudent()
     },
     methods: {
       sidebarHandler() {
@@ -208,22 +208,25 @@
         return JSON.parse(JSON.stringify(obj))
       },
       deleteCourse(id) {
-        api.deleteCourse(id).then(res => {
+        api.deleteJoinedCourse(id).then(res => {
           if (res === 'success') {
-            this.updateTeacher()
+            this.updateStudent()
           }
         })
       },
-      updateTeacher() {
-        api.update(this.$store.state.id, 'teacher').then(info => {
+      updateStudent() {
+        api.update(this.$store.state.id, 'student').then(info => {
           console.log(info)
-          this.$store.commit('course', info[0])
-          this.$store.commit('tutorial', info[1])
-          this.$store.dispatch('courseList')
-          this.$store.dispatch('tutorialActivity')
-          this.$store.dispatch('tutorialData')
-          this.courses = this.deepClone(this.$store.state.course.course)
-          // console.log(this.$store.state)
+          this.$store.commit('joinedCourse', info[0])
+          this.$store.commit('joinedTutorial', info[1])
+          this.$store.commit('courseSelect', info[2])
+          this.$store.commit('tutorialSelect', info[3])
+          this.$store.dispatch('courseSelecting')
+          this.$store.dispatch('tutorialFormat')
+          this.$store.dispatch('tutorialSelecting')
+          this.$store.dispatch('tutorialCollect')
+          this.courses = this.deepClone(this.$store.state.student.courseSelected)
+          console.log(this.$store.state.student)
         })
       },
     },

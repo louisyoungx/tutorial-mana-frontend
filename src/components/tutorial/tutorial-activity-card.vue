@@ -45,28 +45,28 @@
                     </div>
                 </div>
             </div>
-            <div v-if="type === 'student'" class="px-5 lg:px-5 md:px-10 py-3 lg:py-4 md:flex flex-row items-center justify-between border-t border-gray-300">
+            <div v-if="showButton" class="px-5 lg:px-5 md:px-10 py-3 lg:py-4 md:flex flex-row items-center justify-between border-t border-gray-300">
                 <div class="flex items-center md:mb-0 mb-4">
                     <div class="flex items-center">
                         <div
                                 class="bg-white border 2 border-black rounded-full w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                            <input checked type="radio" name="radio"
+                            <input @click="this.$emit('accept', $event.target.value)" type="radio" name="radio"
                                    class="checkbox appearance-none focus:outline-none border-none rounded-full border-gray-400 absolute cursor-pointer w-full h-full checked:border-none" />
                             <div class="check-icon hidden bg-black rounded-full w-3 h-3 z-1"></div>
                         </div>
                         <p class="ml-3 text-base leading-4 font-normal text-gray-800">
-                            Going
+                            参加
                         </p>
                     </div>
                     <div class="flex items-center ml-6">
                         <div
                                 class="bg-white rounded-full w-5 h-5 flex flex-shrink-0 justify-center items-center relative border-black border">
-                            <input type="radio" name="radio"
+                            <input @click="this.$emit('cancel', $event.target.value)" type="radio" name="radio"
                                    class="checkbox appearance-none focus:outline-none rounded-full absolute cursor-pointer w-full h-full checked:border-none" />
                             <div class="check-icon hidden bg-black rounded-full w-3 h-3 z-1"></div>
                         </div>
                         <p class="ml-3 text-base leading-4 font-normal text-gray-800">
-                            Not Going
+                            不参加
                         </p>
                     </div>
                 </div>
@@ -111,8 +111,9 @@
             location: String,
             wallpaper: String,
             avatar: Array,
-            type: String
-        }
+            showButton: Boolean
+        },
+        emits: ['accept', 'cancel']
     }
 </script>
 

@@ -1,5 +1,6 @@
 <template>
 <div class="bg-gray-100">
+    <modals :title="modals.title" :open="modals.open" :remind="modals.remind" :confirm="modals.confirm" :cancel="modals.cancel" />
     <section class="bg-white h-screen">
         <div class="mx-auto flex lg:justify-center h-full flex-col lg:flex-row">
             <div class="w-full lg:w-1/2 px-2 py-20 sm:py-40 sm:px-12 flex flex-col justify-center items-center bg-blue-600 relative">
@@ -194,6 +195,10 @@
                             </div>
                         </Listbox>
 
+                        <div v-if="!showInput" class="">
+                            <button @click="this.$router.push(`/sign-up`)" class="focus:outline-none w-full sm:w-auto bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-700 rounded text-white px-8 py-3 text-sm mt-6">注册</button>
+                        </div>
+
                         <div v-if="showInput" class="flex flex-col mt-8">
                             <label for="uid" class="text-lg font-semibold leading-tight">{{inputTitle}}</label>
                             <input v-model="uid" id="uid" class="h-10 px-2 w-full rounded mt-2 text-gray-600 focus:outline-none focus:border focus:border-blue-700 border-gray-300 border shadow" type="text" />
@@ -213,7 +218,12 @@
     import { ref } from 'vue'
     import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
     import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/solid'
+    import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+    import { ExclamationIcon } from '@heroicons/vue/outline'
+    import Modals from "../components/overlays/modals";
+    import Notifications from "../components/overlays/notifications";
     import api from '../http/index'
+    import TeacherSidebar from "../components/sidebar/teacher-sidebar";
 
     const publishingOptions = [
         { title: '请选择', description: '选择您的身份', current: true },
@@ -230,24 +240,41 @@
             ListboxOptions,
             CheckIcon,
             ChevronDownIcon,
+            Notifications,
+            Modals, TeacherSidebar,
+            Dialog,
+            DialogOverlay,
+            DialogTitle,
+            TransitionChild,
+            TransitionRoot,
+            ExclamationIcon,
         },
         data: function () {
             return {
                 uid: '',
                 inputTitle: '',
                 showInput: false,
+                modals: {
+                    modals: '错误',
+                    open: false,
+                    remind: '',
+                    confirm: '修改',
+                    cancel: '取消'
+                },
             }
         },
         setup() {
             const selected = ref(publishingOptions[0])
+            const open = ref(true)
             return {
                 publishingOptions,
                 selected,
+                open,
             }
         },
         created() {
             // this.signInHandler('123456', 'teacher')
-            this.signInHandler('18085132', 'student')
+            // this.signInHandler('18085132', 'student')
         },
 
         methods: {
@@ -269,10 +296,6 @@
             },
 
             signIn() {
-                let data = {
-                    type: this.selected.title,
-                    uid: this.uid
-                }
                 if (this.selected.title === '学生') {
                     this.signInHandler(this.uid, 'student')
                 }
@@ -280,6 +303,7 @@
                     this.signInHandler(this.uid, 'teacher')
                 } else {
                     console.error("SELECT TYPE ERROR")
+                    this.showError('选择身份不存在')
                 }
             },
 
@@ -290,12 +314,21 @@
                         this.$store.commit('type', type)
                         this.$store.commit('init', res[0])
                         this.updateHandler(type)
-                        // this.$router.push(`/${type}/home-page`)
+                        this.$router.push(`/${type}/home-page`)
                     } else {
                         console.log('Login Failed')
-                        this.updateHandler(type)
+                        this.showError('学号/工号错误 或 身份不匹配')
+                        //this.updateHandler(type)
                     }
                 })
+            },
+
+            showError(remind) {
+                this.modals.remind = remind
+                this.modals.open = false
+                setTimeout(() => {
+                    this.modals.open = true
+                }, 0)
             },
 
             updateHandler(type) {
@@ -316,6 +349,7 @@
                     this.$store.commit('courseSelect', info[2])
                     this.$store.commit('tutorialSelect', info[3])
                     this.$store.dispatch('courseSelecting')
+                    this.$store.dispatch('tutorialFormat')
                     this.$store.dispatch('tutorialSelecting')
                     console.log(this.$store.state)
                 })
@@ -329,6 +363,7 @@
                     this.$store.dispatch('courseList')
                     this.$store.dispatch('tutorialActivity')
                     this.$store.dispatch('tutorialData')
+                    this.$store.dispatch('tutorialCollect')
                     // console.log(this.$store.state)
                 })
             },

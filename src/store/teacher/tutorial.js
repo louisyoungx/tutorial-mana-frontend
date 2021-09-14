@@ -56,35 +56,43 @@ const tutorial = {
             let tutorialActivity = []
             let totalNum = 0
             state.tutorial.forEach(activity => {
-                totalNum += activity.joined_num
-                let start_time = transformTimestamp(activity.start_time)
-                let duration_time  = new Date(activity.duration_time)
-                let now_time = new Date()
-                let active = true
-                if (now_time > start_time) {
-                    active = false
+                if (activity.is_delete === false) {
+                    totalNum += activity.joined_num
+                    let start_time = transformTimestamp(activity.start_time)
+                    let now_time = new Date()
+                    let active = true
+                    if (now_time > new Date(activity.start_time)) {
+                        active = false
+                    }
+                    let each_activity = {
+                        id: activity.id,
+                        course_id: activity.course_id,
+                        day: start_time.dayString,
+                        time: start_time.timeString,
+                        duration_time: activity.duration_time,
+                        date: start_time.dateString,
+                        active: active,
+                        title: activity.course_name + '-' + activity.teacher_name,
+                        course_name: activity.course_name,
+                        teacher_id: activity.teacher_id,
+                        teacher_name: activity.teacher_name,
+                        teacher_email: activity.teacher_email,
+                        teacher_phone: activity.teacher_phone,
+                        teacher_avatar: activity.teacher_avatar,
+                        describe: activity.describe,
+                        attendees: activity.joined_num,
+                        location: activity.place,
+                        wallpaper: activity.wallpaper,
+                        avatar: [
+                            'http://www.louisyoung.site:8002/TutorialManage/avatar.jpg',
+                            'http://www.louisyoung.site:8002/TutorialManage/avatar.jpg',
+                            'http://www.louisyoung.site:8002/TutorialManage/avatar.jpg',
+                            'http://www.louisyoung.site:8002/TutorialManage/avatar.jpg',
+                            'http://www.louisyoung.site:8002/TutorialManage/avatar.jpg',
+                        ]
+                    }
+                    tutorialActivity.push(each_activity)
                 }
-                let each_activity = {
-                    id: activity.id,
-                    day: start_time.dayString,
-                    time: start_time.timeString,
-                    duration_time: duration_time,
-                    date: start_time.dateString,
-                    active: active,
-                    title: activity.course_name + '-' + rootState.name,
-                    describe: activity.describe,
-                    attendees: activity.joined_num,
-                    location: activity.place,
-                    wallpaper: activity.wallpaper,
-                    avatar: [
-                        'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card8.jpg',
-                        'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card9.jpg',
-                        'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card10.jpg',
-                        'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card11.jpg',
-                        'https://dh-ui.s3.amazonaws.com/assets/webapp/layout/grid_cards/grid_card12.jpg',
-                    ]
-                }
-                tutorialActivity.push(each_activity)
             })
             commit('tutorialActivity', tutorialActivity)
             commit('totalNum', totalNum)

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-no-wrap bg-gray-200">
-    <teacher-sidebar></teacher-sidebar>
+    <student-sidebar></student-sidebar>
     <div class="container mx-auto py-10 md:w-8/12 lg:w-4/5 w-11/12 px-6">
       <div class="w-full rounded shadow bg-white mb-6">
         <div
@@ -598,10 +598,10 @@
 </template>
 
 <script>
-import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+import StudentSidebar from "../../components/sidebar/student-sidebar";
 export default {
-  name: "TeacherStudent",
-  components: {TeacherSidebar},
+  name: "StudentTeacher",
+  components: {StudentSidebar},
   data: function () {
     return {
       menu: true,

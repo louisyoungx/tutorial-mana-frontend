@@ -136,7 +136,7 @@
 
 <script>
     export default {
-        name: "header-card",
+        name: "teacher-header",
         props: {
             activity: Number,
             single: Number,

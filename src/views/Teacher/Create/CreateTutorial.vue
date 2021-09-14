@@ -598,8 +598,7 @@
         api.createTutorial(data).then(res => {
           if (res.course_id === Number(this.selected.id)) {
             console.log("创建成功：", res.name)
-            this.updateTeacher()
-            this.$router.push('/teacher/tutorial')
+            this.done()
           } else {
             this.modals.remind += ''
             for (let item in res) {
@@ -607,6 +606,19 @@
             }
             this.modals.open = true
           }
+        })
+      },
+
+      done() {
+        api.update(this.$store.state.id, 'teacher').then(info => {
+          console.log(info)
+          this.$store.commit('tutorial', info[0])
+          this.$store.commit('tutorial', info[1])
+          this.$store.dispatch('courseList')
+          this.$store.dispatch('tutorialActivity')
+          this.$store.dispatch('tutorialData')
+          this.$router.push('/teacher/tutorial')
+          // console.log(this.$store.state)
         })
       },
 
@@ -677,41 +689,9 @@
 
 <!-- Add "scoped" attribute to place CSS to this component only -->
 <style scoped>
-  @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
   body {
-    font-family: "Lato", sans-serif;
-  }
-  /* shows controls on hover */
-  .controls {
-    opacity: 0;
-  }
-  .trigger:hover .controls {
-    opacity: 1;
-  }
-  .trigger:hover .overlay {
-    --bg-opacity: 0.75;
-  }
-  /* Checkbox */
-  .checkbox:checked {
-    /* Apply class right-0*/
-    right: 0;
-  }
-  .checkbox:checked + .toggle-label {
-    /* Apply class bg-indigo-700 */
-    background-color: #4299e1;
-  }
-
-  .divcolor {
-    background-color: #4299e1;
-  }
-  .buttoncolor {
-    background-color: #667eea;
-  }
-  .text-color {
-    color: #4a5568;
-  }
-  .height {
-    height: 0.313rem;
+    --tw-bg-opacity: 1;
+    background-color: rgba(229,231,235,var(--tw-bg-opacity));
   }
 </style>
 

@@ -1,18 +1,20 @@
 <template>
     <container-body>
 
-        <teacher-sidebar/>
+        <student-sidebar/>
 
         <container-content>
             <!--日期-->
             <header-data :date=todayDate />
             <!--帮扶数据-->
-            <teacher-header :activity=tutorialData.activity :single=tutorialData.single :total=tutorialData.total
+            <student-header :activity=tutorialData.activity
+                            :single=tutorialData.single
+                            :total=tutorialData.total
                             :course=tutorialData.course />
 
             <!--现有帮扶活动-->
             <content-full>
-                <content-container title="发起的帮扶活动">
+                <content-container title="参加的帮扶活动">
                     <tutorial-activity-card
                             v-for="active in tutorialActivity"
                             :time="active.time"
@@ -23,7 +25,7 @@
                             :location="active.location"
                             :wallpaper="active.wallpaper"
                             :avatar="active.avatar"
-                            :showButtom="false"
+                            :showButton="false"
                     />
                 </content-container>
             </content-full>
@@ -31,7 +33,7 @@
             <content-half>
 
                 <div>
-                    <content-container title="创建的课程">
+                    <content-container title="参加的课程">
                         <course-card
                                 v-for="course in courses"
                                 :academy="course.academy"
@@ -39,9 +41,9 @@
                                 :describe="course.describe"
                                 :term="course.term"
                                 :limit="course.limit"
-                                :teacher="course.teacher"
-                                :phone="course.phone"
-                                :avatar="course.avatar"
+                                :teacher="course.teacher_name"
+                                :phone="course.teacher_phone"
+                                :avatar="course.teacher_avatar"
                                 :showButton="false"
                         />
                     </content-container>
@@ -49,7 +51,7 @@
                 </div>
 
                 <div>
-                    <content-container title="学生请求帮扶">
+                    <content-container title="发出的帮扶请求">
                         <student-quest-card
                                 v-for="quest in studentQuest"
                                 :uid="quest.uid"
@@ -73,9 +75,9 @@
 
 <script>
 
-    import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+    import StudentSidebar from "../../components/sidebar/student-sidebar";
     import HeaderData from "../../components/header/header-data";
-    import TeacherHeader from "../../components/header/teacher-header";
+    import StudentHeader from "../../components/header/student-header";
     import DashModes from "../../components/dash/dash-modes";
     import DashTask from "../../components/dash/dash-task";
     import DashTrending from "../../components/dash/dash-trending";
@@ -91,7 +93,7 @@
     import api from "../../http";
 
     export default {
-        name: "TeacherHome",
+        name: "StudentHome",
         components: {
             TutorialAcceptCard,
             StudentQuestCard,
@@ -105,9 +107,9 @@
             DashTrending,
             DashTask,
             DashModes,
-            TeacherHeader,
+            StudentHeader,
             HeaderData,
-            TeacherSidebar
+            StudentSidebar
         },
         data: function () {
             return {
@@ -143,38 +145,37 @@
                 //     describe: '',
                 //     term: '2020上学期',
                 //     limit: 10,
-                //     teacher: 'Louis',
+                //     student: 'Louis',
                 //     phone: '17369661665',
                 //     avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png',
                 // }
                 studentQuest: [
-                    {
-                        uid: '18085132',
-                        name: '曾建雄',
-                        tel: '18278654592',
-                        email: '1382736598@qq.com',
-                        expectTime: '2021/09/21-19:00',
-                        avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png'
-                    },
-                    {
-                        uid: '18085132',
-                        name: '曾建雄',
-                        tel: '18278654592',
-                        email: '1382736598@qq.com',
-                        expectTime: '2021/09/21-19:00',
-                        avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png'
-                    },
+                    // {
+                    //     uid: '18085132',
+                    //     name: '曾建雄',
+                    //     tel: '18278654592',
+                    //     email: '1382736598@qq.com',
+                    //     expectTime: '2021/09/21-19:00',
+                    //     avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png'
+                    // },
+                    // {
+                    //     uid: '18085132',
+                    //     name: '曾建雄',
+                    //     tel: '18278654592',
+                    //     email: '1382736598@qq.com',
+                    //     expectTime: '2021/09/21-19:00',
+                    //     avatar: 'https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_4.png'
+                    // },
                 ]
-
             };
         },
         methods: {
             init() {
                 let today = new Date()
                 this.todayDate = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-                this.tutorialData = this.deepClone(this.$store.state.tutorial.tutorialData)
-                this.tutorialActivity = this.deepClone(this.$store.state.tutorial.tutorialActivity)
-                this.courses = this.deepClone(this.$store.state.course.courseList)
+                this.tutorialData = this.deepClone(this.$store.state.student.tutorialData)
+                this.tutorialActivity = this.deepClone(this.$store.state.student.tutorialSelected)
+                this.courses = this.deepClone(this.$store.state.student.courseSelected)
                 this.studentQuest = []
             },
             deepClone(obj) {
@@ -183,26 +184,28 @@
             showState() {
                 console.log(this.$store.state)
             },
-            updateTeacher() {
-                api.update(this.$store.state.id, 'teacher').then(info => {
+            updateStudent() {
+                api.update(this.$store.state.id, 'student').then(info => {
                     console.log(info)
-                    this.$store.commit('course', info[0])
-                    this.$store.commit('tutorial', info[1])
-                    this.$store.dispatch('courseList')
-                    this.$store.dispatch('tutorialActivity')
-                    this.$store.dispatch('tutorialData')
-                    this.init()
-                    // console.log(this.$store.state)
+                    this.$store.commit('joinedCourse', info[0])
+                    this.$store.commit('joinedTutorial', info[1])
+                    this.$store.commit('courseSelect', info[2])
+                    this.$store.commit('tutorialSelect', info[3])
+                    this.$store.dispatch('courseSelecting')
+                    this.$store.dispatch('tutorialFormat')
+                    this.$store.dispatch('tutorialSelecting')
+                    this.$store.dispatch('tutorialCollect')
+                    console.log(this.$store.state)
                 })
             },
         },
         setup() {
         },
         created() {
+            this.updateStudent()
             this.showState()
-            this.updateTeacher()
+            this.init()
         }
     };
 </script>
-
 

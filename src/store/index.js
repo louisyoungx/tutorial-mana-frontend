@@ -16,6 +16,7 @@ export default createStore({
         email: undefined,
         name: undefined,
         phone: undefined,
+        location: undefined,
         wechat_id: undefined
     },
     mutations: {
@@ -30,6 +31,7 @@ export default createStore({
             state.email = data.email
             state.name = data.name
             state.phone = data.phone
+            state.location = data.location
             state.wechat_id = data.wechat_id
         },
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-no-wrap bg-gray-200">
-    <teacher-sidebar/>
+    <student-sidebar/>
     <div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
       <div class="w-full bg-white py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between px-5 sm:px-10 sm:shadow rounded">
         <h2 class="text-gray-700 text-2xl mb-4 sm:mb-0">Posts</h2>
@@ -1276,10 +1276,10 @@
 </template>
 
 <script>
-import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+import StudentSidebar from "../../components/sidebar/student-sidebar";
 export default {
-  name: "TeacherQuest",
-  components: {TeacherSidebar},
+  name: "StudentQuest",
+  components: {StudentSidebar},
   data: function () {
     return {
       menu: true,

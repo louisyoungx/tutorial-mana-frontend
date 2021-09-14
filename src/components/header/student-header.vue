@@ -1,9 +1,7 @@
 <template>
     <!-- Card is full width. Use in 12 col grid for best view. -->
     <!-- Card code block start -->
-    <div
-            class="w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 mt-8"
-    >
+    <div class="w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 mt-8">
         <div class="bg-white rounded shadow pl-6 px-2 py-6 flex items-center">
             <div class="p-4 divcolor rounded">
                 <svg
@@ -29,12 +27,12 @@
             </div>
             <div class="ml-4">
                 <h3 class="mb-1 leading-5 text-gray-800 font-bold text-2xl">
-                    2,330
+                    {{activity}}
                 </h3>
                 <p
                         class="text-gray-600 text-sm tracking-normal font-normal leading-5"
                 >
-                    Posts Made
+                    参加的集体帮扶
                 </p>
             </div>
         </div>
@@ -62,11 +60,11 @@
                 </svg>
             </div>
             <div class="ml-4">
-                <h3 class="mb-1 leading-5 text-gray-800 font-bold text-2xl">12%</h3>
-                <p
-                        class="text-gray-600 text-sm tracking-normal font-normal leading-5"
-                >
-                    Click Rate
+                <h3 class="mb-1 leading-5 text-gray-800 font-bold text-2xl">
+                    {{single}}
+                </h3>
+                <p class="text-gray-600 text-sm tracking-normal font-normal leading-5">
+                    发起的单独帮扶
                 </p>
             </div>
         </div>
@@ -91,12 +89,12 @@
             </div>
             <div class="ml-4">
                 <h3 class="mb-1 leading-5 text-gray-800 font-bold text-2xl">
-                    3245
+                    {{total}}
                 </h3>
                 <p
                         class="text-gray-600 text-sm tracking-normal font-normal leading-5"
                 >
-                    Subscribers
+                    活动次数
                 </p>
             </div>
         </div>
@@ -123,12 +121,12 @@
             </div>
             <div class="ml-4">
                 <h3 class="mb-1 leading-5 text-gray-800 font-bold text-2xl">
-                    $1245
+                    {{course}}
                 </h3>
                 <p
                         class="text-gray-600 text-sm tracking-normal font-normal leading-5"
                 >
-                    Profit Earned
+                    课程数目
                 </p>
             </div>
         </div>
@@ -138,7 +136,13 @@
 
 <script>
     export default {
-        name: "header-card"
+        name: "student-header",
+        props: {
+            activity: Number,
+            single: Number,
+            total: Number,
+            course: Number
+        }
     }
 </script>
 

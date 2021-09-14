@@ -1,6 +1,22 @@
 <template>
   <div class="flex flex-no-wrap bg-gray-200">
     <teacher-sidebar></teacher-sidebar>
+    <slide-overs
+            :open="slide.open"
+            :time="slide.time"
+            :date="slide.date"
+            :duration_time="slide.duration_time"
+            :title="slide.title"
+            :attendees="slide.attendees"
+            :describe="slide.describe"
+            :location="slide.location"
+            :wallpaper="slide.wallpaper"
+            :teacher_id="slide.teacher_id"
+            :teacher_name="slide.teacher_name"
+            :teacher_phone="slide.teacher_phone"
+            :teacher_email="slide.teacher_email"
+            :teacher_avatar="slide.teacher_avatar"
+    />
     <div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
 
       <div class="w-full rounded shadow bg-white mb-6">
@@ -75,6 +91,7 @@
       </div>
 
       <div class="mx-auto container bg-white shadow rounded mt-8">
+        <!--
         <div
           class="flex flex-col lg:flex-row p-4 lg:p-8 justify-between items-start lg:items-stretch w-full"
         >
@@ -313,6 +330,7 @@
             </div>
           </div>
         </div>
+        -->
         <div class="w-full overflow-x-scroll xl:overflow-x-hidden">
           <table class="min-w-full bg-white">
             <thead>
@@ -362,7 +380,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="activity in tutorialActivity" class="h-24 border-gray-300 border-b" :key="activity.id">
+              <tr v-for="activity in tutorialActivity" @click="showSlide(activity)" class="cursor-pointer h-24 border-gray-300 border-b" :key="activity.id">
                 <td class="pl-8 pr-6 text-left whitespace-no-wrap text-sm text-gray-800 tracking-normal leading-4">
                   <input
                     v-model="selected" :value="activity.id" number
@@ -457,14 +475,31 @@
 <script>
 import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
 import api from "../../http";
+import SlideOvers from "../../components/overlays/slide-overs";
 export default {
-  name: "Tutorial",
-  components: {TeacherSidebar},
+  name: "TeacherTutorial",
+  components: {SlideOvers, TeacherSidebar},
   data: function () {
     return {
       menu: true,
       check: false,
       tutorialActivity: [],
+      slide: {
+        open: false,
+        time: undefined,
+        date: undefined,
+        duration_time: undefined,
+        title: undefined,
+        describe: undefined,
+        attendees: undefined,
+        location: undefined,
+        wallpaper: undefined,
+        teacher_id: undefined,
+        teacher_name: undefined,
+        teacher_phone: undefined,
+        teacher_email: undefined,
+        teacher_avatar: undefined,
+      },
       tutorialData:
       {
           activity: 0,
@@ -494,9 +529,21 @@ export default {
     },
   },
   created() {
-    this.updateTeacher()
+    this.avatar = this.$store.state.avatar;
+    this.tutorialData = this.deepClone(this.$store.state.tutorial.tutorialData)
+    this.tutorialActivity = this.deepClone(this.$store.state.tutorial.tutorialActivity)
+    // this.updateTeacher()
   },
   methods: {
+    showSlide(activity) {
+      this.slide = activity
+      this.slide.open = false
+      console.log(this.slide, activity)
+      setTimeout(() => {
+        this.slide.open = true;
+      }, 0)
+    },
+
     sidebarHandler() {
       this.menu = !this.menu;
       let single = document.getElementById("menuList");
@@ -541,14 +588,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
-body {
-  font-family: "Lato", sans-serif;
-}
-/* shows controls on hover */
-.controls {
-  opacity: 0;
-}
 .trigger:hover .controls {
   opacity: 1;
 }
@@ -570,12 +609,6 @@ body {
 }
 .buttoncolor {
   background-color: #667eea;
-}
-.text-color {
-  color: #4a5568;
-}
-.height {
-  height: 0.313rem;
 }
 </style>
 

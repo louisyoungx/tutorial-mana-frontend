@@ -1,9 +1,10 @@
 <template>
   <div class="flex flex-no-wrap bg-gray-200">
     <teacher-sidebar></teacher-sidebar>
+    <modals :title="modals.title" :open="modals.open" :remind="modals.remind" :confirm="modals.confirm" :cancel="modals.cancel" />
     <div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
       <div class="w-full bg-white py-5 px-5 sm:px-10 sm:shadow rounded">
-        <h2 class="text-gray-700 text-2xl mb-4 sm:mb-0">Settings</h2>
+        <h2 class="text-gray-700 text-2xl mb-4 sm:mb-0">设置</h2>
         <div class="w-full mx-auto mt-6 mb-4">
           <div
             id="progress_bar"
@@ -131,76 +132,7 @@
           <div class="container mx-auto">
             <div class="xl:w-full border-b border-gray-300 py-5">
               <div class="flex items-center w-11/12 mx-auto">
-                <p class="text-lg text-gray-800 font-bold">Profile</p>
-                <div
-                  class="relative md:mt-0"
-                  onmouseover="showTooltip(true)"
-                  onmouseout="showTooltip(false)"
-                >
-                  <div
-                    id="tooltip"
-                    role="tooltip"
-                    class="z-20 transition duration-150 ease-in-out bottom-0 mb-8 opacity-0 absolute shadow-lg lg:pt-4 lg:pr-2 lg:pl-3 lg:pb-5 bg-white text-gray-600 rounded w-40"
-                  >
-                    <svg
-                      width="16px"
-                      height="8px"
-                      viewBox="0 0 16 8"
-                      version="1.1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <g
-                        id="Page-1"
-                        stroke="none"
-                        stroke-width="1"
-                        fill="none"
-                        fill-rule="evenodd"
-                      >
-                        <g
-                          id="Tooltips-"
-                          transform="translate(-84.000000, -203.000000)"
-                          fill="#FFFFFF"
-                        >
-                          <g
-                            id="Group-3-Copy"
-                            transform="translate(76.000000, 145.000000)"
-                          >
-                            <polygon
-                              class="shadow"
-                              id="Triangle"
-                              transform="translate(16.000000, 62.000000) rotate(-180.000000) translate(-16.000000, -62.000000) "
-                              points="16 58 24 66 8 66"
-                            ></polygon>
-                          </g>
-                        </g>
-                      </g>
-                    </svg>
-                    <p class="text-xs text-gray-600 leading-4">
-                      Let your colleagues know who you are
-                    </p>
-                  </div>
-                  <div class="ml-2 cursor-pointer">
-                    <svg
-                      aria-haspopup="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="icon icon-tabler icon-tabler-info-circle"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="#A0AEC0"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" />
-                      <circle cx="12" cy="12" r="9" />
-                      <line x1="12" y1="8" x2="12.01" y2="8" />
-                      <polyline points="11 12 12 12 12 16 13 16" />
-                    </svg>
-                  </div>
-                </div>
+                <p class="text-lg text-gray-800 font-bold">基本信息</p>
               </div>
             </div>
             <div class="w-11/12 mx-auto">
@@ -208,7 +140,7 @@
                 class="w-20 h-20 rounded-full bg-cover bg-center bg-no-repeat relative mt-6 shadow mb-8"
               >
                 <img
-                  src="https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form2.jpg"
+                  src="http://www.louisyoung.site:8002/TutorialManage/avatar.jpg"
                   alt=""
                   class="w-full h-full object-cover overflow-hidden absolute z-0 rounded-full shadow"
                 />
@@ -238,34 +170,20 @@
               </div>
               <div class="flex flex-col xl:w-2/6 lg:w-2/6 w-full">
                 <label
-                  for="username"
+                  for="uid"
                   class="pb-2 text-sm font-bold text-gray-800"
-                  >Username</label
+                  >工号</label
                 >
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
+                <input v-model="user.uid"
+                  disabled
+                  type="number"
+                  id="uid"
+                  name="uid"
+                  maxlength="10"
                   class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                  placeholder="@example"
+                  placeholder="请填写您的工号"
                   required
                 />
-              </div>
-              <div class="mt-8 flex flex-col xl:w-3/5 lg:w-3/5 w-full">
-                <label for="about" class="pb-2 text-sm font-bold text-gray-800"
-                  >About</label
-                >
-                <textarea
-                  id="about"
-                  name="about"
-                  class="border border-gray-300 pl-3 py-2 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 resize-none text-gray-800"
-                  placeholder="Let the world know who you are"
-                  rows="5"
-                  required
-                ></textarea>
-                <p class="w-full text-right text-xs text-gray-500 pt-1">
-                  Character Limit: 200
-                </p>
               </div>
             </div>
           </div>
@@ -276,14 +194,14 @@
               type="button"
               class="btn text-sm focus:outline-none text-gray-600 border border-gray-300 py-2 px-6 mr-4 rounded hover:bg-gray-200 transition duration-150 ease-in-out"
             >
-              Back
+              上一步
             </button>
             <button
               type="button"
               v-on:click="handleSteps('1')"
               class="bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 rounded text-white px-8 py-2 text-sm focus:outline-none"
             >
-              Next
+              下一步
             </button>
           </div>
         </form>
@@ -293,7 +211,7 @@
           <div class="xl:w-full border-b border-gray-300 py-5">
             <div class="flex items-center w-11/12 mx-auto">
               <p class="text-lg text-gray-800 font-bold">
-                Personal Information
+                详细信息
               </p>
               <div class="ml-2 cursor-pointer text-gray-600">
                 <svg
@@ -317,39 +235,41 @@
                 <div class="xl:flex lg:flex md:flex flex-wrap justify-between">
                   <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
                     <label
-                      for="FirstName"
+                      for="name"
                       class="pb-2 text-sm font-bold text-gray-800"
-                      >First Name</label
+                      >名字</label
                     >
-                    <input
+                    <input v-model="user.name"
                       type="text"
-                      name="firstName"
+                      maxlength="6"
+                      name="name"
                       required
-                      id="FirstName"
+                      id="name"
                       class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder=""
+                      placeholder="请填写您的姓名"
                     />
                   </div>
                   <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
                     <label
-                      for="LastName"
+                      for="phone"
                       class="pb-2 text-sm font-bold text-gray-800"
-                      >Last Name</label
+                      >手机号</label
                     >
-                    <input
-                      type="text"
-                      id="LastName"
-                      name="lastName"
+                    <input v-model="user.phone"
+                      type="number"
+                      maxlength="11"
+                      id="phone"
+                      name="phone"
                       required
                       class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder=""
+                      placeholder="请填写您的手机号"
                     />
                   </div>
                   <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
                     <label
-                      for="email2"
+                      for="email"
                       class="pb-2 text-sm font-bold text-gray-800"
-                      >Email</label
+                      >电子邮箱</label
                     >
                     <div class="relative">
                       <div
@@ -372,8 +292,8 @@
                           <polyline points="3 7 12 13 21 7" />
                         </svg>
                       </div>
-                      <input
-                        id="email2"
+                      <input v-model="user.email"
+                        id="email"
                         name="email"
                         required
                         class="w-full text-gray-800 focus:outline-none focus:border focus:border-blue-500 font-normal py-3 flex items-center pl-16 text-sm border-green-400 rounded border shadow"
@@ -383,7 +303,7 @@
                     <div
                       class="flex justify-between items-center pt-1 text-green-400"
                     >
-                      <p class="text-xs">Email submission success!</p>
+                      <p class="text-xs">邮箱填写成功！</p>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -406,23 +326,21 @@
                   </div>
                   <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
                     <label
-                      for="City"
+                      for="academy"
                       class="pb-2 text-sm font-bold text-gray-800"
-                      >City</label
+                      >学院</label
                     >
                     <div
                       class="border border-gray-300 shadow-sm rounded flex relative"
                     >
-                      <select
+                      <select v-model="user.academy"
                         type="text"
-                        name="city"
+                        name="academy"
                         required
-                        id="City"
+                        id="academy"
                         class="bg-transparent appearance-none z-10 pl-3 py-3 w-full text-sm border border-transparent focus:outline-none focus:border-blue-500 text-gray-800 rounded"
                       >
-                        <option value="Switzerland">Switzerland</option>
-                        <option value="America">America</option>
-                        <option value="Australia">Australia</option>
+                        <option value="测试与光电工程学院" selected="selected">测试与光电工程学院</option>
                       </select>
                       <div
                         class="px-4 flex items-center border-l border-gray-300 flex-col justify-center text-gray-500 absolute right-0 bottom-0 top-0 mx-auto z-0"
@@ -440,122 +358,38 @@
                           stroke-linecap="round"
                           stroke-linejoin="round"
                         >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <polyline points="6 15 12 9 18 15" />
-                        </svg>
-                        <svg
-                          tabindex="0"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="icon icon-tabler icon-tabler-chevron-down"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <polyline points="6 9 12 15 18 9" />
                         </svg>
                       </div>
                     </div>
                   </div>
+<!--                  <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">-->
+<!--                    <label-->
+<!--                      for="wechat_id"-->
+<!--                      class="pb-2 text-sm font-bold text-gray-800"-->
+<!--                      >微信号</label-->
+<!--                    >-->
+<!--                    <input-->
+<!--                      type="text"-->
+<!--                      id="wechat_id"-->
+<!--                      name="wechat_id"-->
+<!--                      class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"-->
+<!--                      placeholder="微信号：可以不填"-->
+<!--                    />-->
+<!--                  </div>-->
                   <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
                     <label
-                      for="StreetAddress"
+                      for="location"
                       class="pb-2 text-sm font-bold text-gray-800"
-                      >Street Address</label
+                      >默认辅导地点</label
                     >
-                    <input
+                    <input v-model="user.location"
                       type="text"
-                      id="StreetAddress"
-                      name="streetAddress"
+                      id="location"
+                      name="location"
                       required
                       class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder=""
+                      placeholder="请填写默认辅导地点"
                     />
-                  </div>
-                  <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                    <label
-                      for="Country"
-                      class="pb-2 text-sm font-bold text-gray-800"
-                      >Country</label
-                    >
-                    <input
-                      type="text"
-                      id="Country"
-                      name="country"
-                      required
-                      class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                      placeholder="California"
-                    />
-                  </div>
-                </div>
-                <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                  <label
-                    for="State/Province"
-                    class="pb-2 text-sm font-bold text-gray-800"
-                    >State/Province</label
-                  >
-                  <input
-                    type="text"
-                    id="State/Province"
-                    name="state"
-                    required
-                    class="border border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                    placeholder="California"
-                  />
-                </div>
-                <div class="xl:w-2/5 lg:w-2/5 md:w-2/5 flex flex-col mb-6">
-                  <div class="flex items-center pb-2">
-                    <label for="ZIP" class="text-sm font-bold text-gray-800"
-                      >ZIP/Postal Code</label
-                    >
-                    <div class="ml-2 cursor-pointer text-gray-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                      >
-                        <path
-                          class="heroicon-ui"
-                          d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0v-4a1 1 0 0 1 1-1zm0-4a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-
-                  <input
-                    type="text"
-                    id="ZIP"
-                    name="zip"
-                    class="border border-red-400 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-blue-500 text-gray-800"
-                    placeholder="e.g 86745"
-                  />
-                  <div
-                    class="flex justify-between items-center pt-1 text-red-400"
-                  >
-                    <p class="text-xs">Incorrect Zip Code</p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="feather feather-x-circle"
-                    >
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="15" y1="9" x2="9" y2="15"></line>
-                      <line x1="9" y1="9" x2="15" y2="15"></line>
-                    </svg>
                   </div>
                 </div>
               </div>
@@ -569,14 +403,14 @@
               v-on:click="backSteps('2')"
               class="btn text-sm focus:outline-none text-gray-600 border border-gray-300 py-2 px-6 mr-4 rounded hover:bg-gray-200 transition duration-150 ease-in-out"
             >
-              Back
+              上一步
             </button>
             <button
               type="button"
               v-on:click="handleSteps('2')"
               class="bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 rounded text-white px-8 py-2 text-sm focus:outline-none"
             >
-              Next
+              下一步
             </button>
           </div>
         </form>
@@ -587,183 +421,21 @@
             <div class="flex items-center w-11/12 mx-auto">
               <div class="container mx-auto">
                 <div class="mx-auto xl:w-full">
-                  <p class="text-lg text-gray-800 font-bold">Alerts</p>
-                  <p class="text-sm text-gray-500 pt-1">
-                    Get updates of any new activity or features. Turn on/off
-                    your preferences
-                  </p>
+                  <p class="text-sm text-gray-500 pt-1">工号-姓名</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ user.uid }} - {{ user.name }}</p>
+                  <p class="text-sm text-gray-500 pt-1">手机号</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ user.phone }}</p>
+                  <p class="text-sm text-gray-500 pt-1">邮箱</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ user.email }}</p>
+                  <p class="text-sm text-gray-500 pt-1">学院</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ user.academy }}</p>
+                  <p class="text-sm text-gray-500 pt-1">默认辅导地点</p>
+                  <p class="text-lg text-gray-800 font-bold">{{ user.location }}</p>
                 </div>
               </div>
             </div>
           </div>
           <form>
-            <div class="container mx-auto bg-white py-6 w-11/12">
-              <div class="flex items-center mb-8 text-gray-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-mail"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <polyline points="3 7 12 13 21 7" />
-                </svg>
-                <p class="text-sm font-bold ml-2 text-gray-800">Via Email</p>
-              </div>
-
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Comments</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a post or comment is made
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="email_comments"
-                    id="toggle1"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle1"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Job Applications</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a candidate applies to a job posting
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="email_job_application"
-                    id="toggle2"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle2"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Product Updates</p>
-                  <p class="text-sm text-gray-500">
-                    Get notifitied when there is a new product feature or
-                    upgrades
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="email_product_update"
-                    id="toggle3"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle3"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex items-center mb-8 mt-12 text-gray-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bell"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <path
-                    d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"
-                  />
-                  <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                </svg>
-                <p class="text-sm font-bold ml-2 text-gray-800">
-                  Push Notifications
-                </p>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Comments</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a post or comment is made
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="notification_comment"
-                    id="toggle4"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle4"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Job Applications</p>
-                  <p class="text-sm text-gray-500">
-                    Get notified when a candidate applies to a job posting
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="notification_application"
-                    id="toggle5"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle5"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-              <div class="flex justify-between items-center mb-8">
-                <div class="w-9/12">
-                  <p class="text-sm text-gray-800 pb-1">Product Updates</p>
-                  <p class="text-sm text-gray-500">
-                    Get notifitied when there is a new product feature or
-                    upgrades
-                  </p>
-                </div>
-                <div class="cursor-pointer rounded-full relative shadow-sm">
-                  <input
-                    type="checkbox"
-                    name="notification_updates"
-                    id="toggle6"
-                    class="focus:outline-none checkbox w-4 h-4 rounded-full bg-white absolute m-1 shadow-sm appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggle6"
-                    class="toggle-label bg-gray-200 block w-12 h-6 overflow-hidden rounded-full bg-gray-300 cursor-pointer"
-                  ></label>
-                </div>
-              </div>
-            </div>
             <div
               class="w-full py-4 sm:px-12 px-4 bg-gray-100 flex justify-end rounded-bl rounded-br"
             >
@@ -772,13 +444,13 @@
                 v-on:click="backSteps('3')"
                 class="btn text-sm focus:outline-none text-gray-600 border border-gray-300 py-2 px-6 mr-4 rounded hover:bg-gray-200 transition duration-150 ease-in-out"
               >
-                Back
+                上一步
               </button>
-              <button
+              <button @click="changeUserCheck()"
                 type="button"
                 class="bg-blue-500 focus:outline-none transition duration-150 ease-in-out hover:bg-blue-600 rounded text-white px-8 py-2 text-sm"
               >
-                Save
+                提交
               </button>
             </div>
           </form>
@@ -790,18 +462,107 @@
 
 <script>
 import TeacherSidebar from "../../components/sidebar/teacher-sidebar";
+import api from "../../http";
+import Modals from "../../components/overlays/modals";
 export default {
-  name: "HelloWorld",
-  components: {TeacherSidebar},
+  name: "TeacherSettings",
+  components: {Modals, TeacherSidebar},
   data: function () {
     return {
+      user: {
+        id: '',
+        uid: '',
+        name: '',
+        phone: '',
+        email: '',
+        academy: '',
+        location: '',
+      },
+      modals: {
+        modals: '错误',
+        open: false,
+        remind: '',
+        confirm: '修改',
+        cancel: '取消'
+      },
       menu: true,
       step1: true,
       step2: false,
       step3: false,
     };
   },
+
+  created() {
+    this.user.id = this.$store.state.id
+    this.user.uid = this.$store.state.uid
+    this.user.name = this.$store.state.name
+    this.user.phone = this.$store.state.phone
+    this.user.email = this.$store.state.email
+    this.user.academy = "测试与光电工程学院"
+    this.user.location = this.$store.state.location
+  },
+
   methods: {
+    changeUserCheck() {
+      let tag = false
+      this.modals.remind = ''
+      if (this.user.uid === '') {
+        this.modals.remind += '工号不能为空\r\n'
+        tag = true
+      }
+      if (this.user.name === '') {
+        this.modals.remind += '姓名不能为空\r\n'
+        tag = true
+      }
+      if (this.user.phone === '') {
+        this.modals.remind += '手机号不能为空\r\n'
+        tag = true
+      }
+      if (this.user.email === '') {
+        this.modals.remind += '邮箱不能为空\r\n'
+        tag = true
+      }
+      if (this.user.academy === '') {
+        this.modals.remind += '学院不能为空\r\n'
+        tag = true
+      }
+      if (this.user.location === '') {
+        this.modals.remind += '默认辅导地点不能为空\r\n'
+        tag = true
+      }
+
+      if (tag === true) {
+        this.modals.open = true
+      } else {
+        this.changeUserHandler()
+      }
+    },
+
+    changeUserHandler() {
+      let data = {
+        "id": this.user.id,
+        "uid": this.user.uid,
+        "name": this.user.name,
+        "avatar": "http://www.louisyoung.site:8002/TutorialManage/avatar.jpg",
+        "wechat_id": null,
+        "phone": this.user.phone,
+        "email": this.user.email,
+        "location": this.user.location
+      }
+      api.changeUser(data, 'teacher').then(res => {
+        if (res.name === this.user.name) {
+          console.log("修改成功：", res.name)
+          this.signInHandler(this.user.uid, 'teacher')
+        } else {
+          this.modals.remind += ''
+          for (let item in res) {
+            this.modals.remind += res[item] + '\r\n'
+          }
+          this.modals.open = true
+        }
+      })
+    },
+
     handleSteps(id) {
       if (id === "1") {
         this.step1 = false;
@@ -832,25 +593,72 @@ export default {
       let single = document.getElementById("menuList");
       single.classList.toggle("hidden");
     },
+
+    signInHandler(uid, type) {
+      return api.signIn(uid, type).then(res => {
+        if (res.length !== 0) {
+          console.log('Login success')
+          this.$store.commit('type', type)
+          this.$store.commit('init', res[0])
+          this.updateHandler(type)
+          this.$router.push(`/${type}/home-page`)
+        } else {
+          console.log('Login Failed')
+          this.updateHandler(type)
+        }
+      })
+    },
+
+    updateHandler(type) {
+      let id = this.$store.state.id
+      if (type === 'student') {
+        this.updateStudent(id)
+      }
+      else if (type === 'teacher') {
+        this.updateTeacher(id)
+      }
+    },
+
+    updateStudent(id) {
+      api.update(id, 'student').then(info => {
+        console.log(info)
+        this.$store.commit('joinedCourse', info[0])
+        this.$store.commit('joinedTutorial', info[1])
+        this.$store.commit('courseSelect', info[2])
+        this.$store.commit('tutorialSelect', info[3])
+        this.$store.dispatch('courseSelecting')
+        this.$store.dispatch('tutorialFormat')
+        this.$store.dispatch('tutorialSelecting')
+        console.log(this.$store.state)
+      })
+    },
+
+    updateTeacher(id) {
+      api.update(id, 'teacher').then(info => {
+        console.log(info)
+        this.$store.commit('course', info[0])
+        this.$store.commit('tutorial', info[1])
+        this.$store.dispatch('courseList')
+        this.$store.dispatch('tutorialActivity')
+        this.$store.dispatch('tutorialData')
+        this.$store.dispatch('tutorialCollect')
+        // console.log(this.$store.state)
+      })
+    },
+    showState() {
+      console.log(this.$store.state)
+    }
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
-body {
-  font-family: "Lato", sans-serif;
-}
-/* shows controls on hover */
-.controls {
-  opacity: 0;
-}
 .trigger:hover .controls {
-  opacity: 1;
+  opaacademy: 1;
 }
 .trigger:hover .overlay {
-  --bg-opacity: 0.75;
+  --bg-opaacademy: 0.75;
 }
 /* Checkbox */
 .checkbox:checked {
@@ -860,19 +668,6 @@ body {
 .checkbox:checked + .toggle-label {
   /* Apply class bg-indigo-700 */
   background-color: #4299e1;
-}
-
-.divcolor {
-  background-color: #4299e1;
-}
-.buttoncolor {
-  background-color: #667eea;
-}
-.text-color {
-  color: #4a5568;
-}
-.height {
-  height: 0.313rem;
 }
 </style>
 

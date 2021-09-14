@@ -1,15 +1,20 @@
 import api from '../../http/index'
 const joinedTutorial = {
     state: {
+        joinedTutorial: [],
         joinedTutorialList: [],
         joinedTutorialDict: {},
     },
     mutations: {
         joinedTutorial(state, data) {
-            state.joinedTutorialList = data
+            state.joinedTutorial = data
+            state.joinedTutorialList = []
             state.joinedTutorialDict = {}
             data.forEach(joinedTutorial => {
-                state.joinedTutorialDict[joinedTutorial.course_id] = joinedTutorial
+                if (joinedTutorial.is_delete === false) {
+                    state.joinedTutorialDict[joinedTutorial.tutorial_id] = joinedTutorial
+                    state.joinedTutorialList.push(joinedTutorial)
+                }
             })
         }
     },
