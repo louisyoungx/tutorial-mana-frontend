@@ -34,6 +34,67 @@
 
 ![前端架构 - TutorialManage](./docs/TutorialManage.jpg)
 
+## 后续更新
+
+### v1.0.0
+#### v1.0.0-alpha-bug
+student.settings的sidebar是teacher的
+提示框显示只有1/2
+帮扶活动页面avatar被压竖
+#### v1.0.0-a1-feat
+主页帮扶详情slide
+登录状态保持
+未登录全局跳转登录
+#### v1.0.0-beta-feat
+帮扶详情slide按钮可用
+#### v1.0.0-stable
+课程详情页（slide移植）
+#### v1.0.1
+帮扶详情页（slide移植）
+#### v1.0.2
+student搜索查询
+#### v1.0.3
+student分类查询
+#### v1.0.4
+tutorial列表批量操作
+#### v1.0.5
+teacher显示tutorial学生列表
+
+### v1.1.0
+#### v1.1.0
+tutorial加入人数与确认人数分离
+tutorial添加状态，waiting/padding/done/undo
+#### v1.1.1
+student.tutorial页面增加对超时项目的确认按钮
+tutorial未到时间waiting
+tutorial时间已过padding
+tutorial已完成done
+tutorial未完成undo
+#### v1.1.2
+tutorial活动开始teacher端显示SecretCode
+student端填入SecretCode进行签到
+
+### v1.2.0
+#### v1.2.0
+student发起单独帮扶请求，将结果推送到按钮teacher.home-page
+#### v1.2.1
+支持消息队列
+#### v1.2.2
+teacher确定请求
+teacher要求更改时间/地点
+将回复推送到student
+#### v1.2.3
+双方可查看Query状态列表
+#### v1.2.4
+未读消息队列每周发送邮箱
+
+### v2.0.0
+#### v2.0.0
+微信公众号登录
+头像加载
+#### v2.0.1
+上传课程封面页
+
 ## 安装教程
 
 1.  git clone
