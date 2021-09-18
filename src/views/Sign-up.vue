@@ -577,7 +577,7 @@
                     this.modals.remind += '学院不能为空\r\n'
                     tag = true
                 }
-                if (this.user.location === '' && user.type === 'teacher') {
+                if (this.user.location === '' && this.user.type === 'teacher') {
                     this.modals.remind += '默认辅导地点不能为空\r\n'
                     tag = true
                 }
