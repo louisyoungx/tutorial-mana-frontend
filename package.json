@@ -1,6 +1,6 @@
 {
   "name": "tutorial-mana-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -29,6 +29,7 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "lint-staged": "^9.5.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2"
@@ -41,5 +42,10 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
